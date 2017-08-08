@@ -1,55 +1,86 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const COUNTER_INCREMENT = 'COUNTER_INCREMENT'
-export const COUNTER_DOUBLE_ASYNC = 'COUNTER_DOUBLE_ASYNC'
-
+import {newImg, newSection} from "./dataTypes"
+export const ADD_IMAGE = "ADD_IMAGE"
+export const ADD_SECTION = "ADD_SECTION"
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment (value = 1) {
-  return {
-    type    : COUNTER_INCREMENT,
-    payload : value
-  }
-}
 
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk! */
+const addImageAction = (newImg) => ({
+  type: ADD_IMAGE,
+  payload: newImg
+})
 
-export const doubleAsync = () => {
+
+export const addImage = (evt) => {
+
   return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch({
-          type    : COUNTER_DOUBLE_ASYNC,
-          payload : getState().counter
-        })
-        resolve()
-      }, 200)
-    })
+
+    var imageFiles = evt.target.files
+    for (var i = 0; i < imageFiles.length; i++) {
+      var file = imageFiles[i]
+
+      if (!file.type.match('image.*'))
+        throw new Error("Wrong file type")
+
+      var reader = new FileReader()
+
+      reader.onload = (e) => {
+        const img = 
+        dispatch(addImageAction(e.target.result))
+      }
+
+      reader.readAsDataURL(file);
+      //var myFile = new File([file], "HelloWorld.pdf", { type: "image" })
+      //fileArray.push(file)
+    }
   }
 }
 
-export const actions = {
-  increment,
-  doubleAsync
+
+const addSectionAction = (newSection) => ({
+  type: ADD_SECTION,
+  payload: newSection
+})
+
+export const addSection = () => {
+  return (dispatch, getState) => {
+
+    var newSection = {
+      name: "New Section",
+      imgs: []
+    }
+
+    dispatch(addSectionAction(newSection))
+
+  }
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [COUNTER_INCREMENT]    : (state, action) => state + action.payload,
-  [COUNTER_DOUBLE_ASYNC] : (state, action) => state * 2
+  [ADD_IMAGE]: (state, action) => ({
+    ...state,
+    imgQueue: [...state.imgQueue, action.payload]
+  }),
+  [ADD_SECTION]: (state, action) => ({
+    ...state,
+    sections: [...state.sections, action.payload]
+  }),
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = 0
-export default function counterReducer (state = initialState, action) {
+const initialState = {
+  sections: [],
+  imgQueue: []
+}
+
+export default function Reducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state
