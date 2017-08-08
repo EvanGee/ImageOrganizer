@@ -1,9 +1,15 @@
+//TODO figure out how to change img locations in state with actions
+//TODO map unique section IDs and Img Ids
+
+
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-import {newImg, newSection} from "./dataTypes"
+import { newImg, newSection } from "./dataTypes"
 export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
+export const MOVE_IMG = "MOVE_IMG"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -28,8 +34,9 @@ export const addImage = (evt) => {
       var reader = new FileReader()
 
       reader.onload = (e) => {
-        const img = 
-        dispatch(addImageAction(e.target.result))
+          const img = newImg()
+          img.src = e.target.result
+          dispatch(addImageAction(img))
       }
 
       reader.readAsDataURL(file);
@@ -58,6 +65,20 @@ export const addSection = () => {
   }
 }
 
+const moveImgAction = (oldSection, newSection) => ({
+  type: MOVE_IMG,
+  payload: {oldSection, newSection}
+})
+
+export const moveImg = (oldSection, newSection) => {
+  return (dispatch, getState) => {
+
+
+
+    dispatch(moveImgAction(oldSection, newSection))
+  }
+}
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -70,6 +91,10 @@ const ACTION_HANDLERS = {
     ...state,
     sections: [...state.sections, action.payload]
   }),
+  [MOVE_IMG]: (state, action) => ({
+    ...state,
+    sections: []
+  })
 }
 
 // ------------------------------------
