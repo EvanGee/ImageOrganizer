@@ -1,5 +1,8 @@
+import uuid from "uuid"
+
 export const newImg = () => ({
-    src: ""
+    src: "",
+    id: uuid.v4()
 })
 
 export const newSection = () => ({

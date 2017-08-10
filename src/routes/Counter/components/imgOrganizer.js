@@ -7,7 +7,7 @@ const drag = (e) => {
   e.dataTransfer.setData("text", e.target.id);
 }
 
-export const imgOrganizer = ({ sections, imgQueue, addImage, addSection }) => {
+export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, holdDrag }) => {
   return (
     <div style={{ margin: '0 auto' }} >
       <div className="App-header">
@@ -23,13 +23,10 @@ export const imgOrganizer = ({ sections, imgQueue, addImage, addSection }) => {
 
 
       {
-        
-        imgQueue.map((d, i)=> <Image img={d} i={i} key={i}/>)
-      
+        imgQueue.map((d, i)=> <Image img={d} key={i} holdDrag={holdDrag} />)
       }
       {
-        sections.map((d, i) =>
-          <Section section={d} i={i} key={i}/>)
+        sections.map((d, i) => <Section section={d} i={i} key={i}/>)
       }
       
       

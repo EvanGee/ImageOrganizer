@@ -12,14 +12,15 @@ import Image from "./Image"
 
     var data = e.dataTransfer.getData("text");
     var child = document.getElementById(data)
+
     var oldSection = child.parentElement
     var newSection = e.target
-    newSection.appendChild(child);
+    //newSection.appendChild(child);
 
     var newSectionId = newSection.id.substring(1)
     var oldSectionId = oldSection.id.substring(1)
 
-    console.log(newSectionId + "oldSection: " + oldSectionId)
+    //console.log(newSectionId + "oldSection: " + oldSectionId)
   }
 
 

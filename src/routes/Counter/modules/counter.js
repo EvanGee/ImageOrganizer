@@ -10,6 +10,7 @@ import { newImg, newSection } from "./dataTypes"
 export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
 export const MOVE_IMG = "MOVE_IMG"
+export const HOLD_DRAG = "HOLD_DRAG"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -18,6 +19,32 @@ const addImageAction = (newImg) => ({
   type: ADD_IMAGE,
   payload: newImg
 })
+
+const moveImgAction = (oldSection, newSection, Img) => ({
+  type: MOVE_IMG,
+  payload: { oldSection, newSection, Img }
+})
+
+const addSectionAction = (newSection) => ({
+  type: ADD_SECTION,
+  payload: newSection
+})
+
+export const holdDragAction = (img) => {
+
+
+  return (dispatch, getState) => {
+    console.log("imgOrganizer ", getState().imgOrganizer )
+    findImg(getState().imgOrganizer, img)
+
+
+
+    return {
+      type: HOLD_DRAG,
+      payload: img
+    }
+  }
+}
 
 
 export const addImage = (evt) => {
@@ -34,9 +61,9 @@ export const addImage = (evt) => {
       var reader = new FileReader()
 
       reader.onload = (e) => {
-          const img = newImg()
-          img.src = e.target.result
-          dispatch(addImageAction(img))
+        const img = newImg()
+        img.src = e.target.result
+        dispatch(addImageAction(img))
       }
 
       reader.readAsDataURL(file);
@@ -45,12 +72,6 @@ export const addImage = (evt) => {
     }
   }
 }
-
-
-const addSectionAction = (newSection) => ({
-  type: ADD_SECTION,
-  payload: newSection
-})
 
 export const addSection = () => {
   return (dispatch, getState) => {
@@ -65,18 +86,47 @@ export const addSection = () => {
   }
 }
 
-const moveImgAction = (oldSection, newSection) => ({
-  type: MOVE_IMG,
-  payload: {oldSection, newSection}
-})
 
-export const moveImg = (oldSection, newSection) => {
+export const moveImg = () => {
   return (dispatch, getState) => {
 
 
 
-    dispatch(moveImgAction(oldSection, newSection))
   }
+}
+
+
+const findImg = (imgState, img) => {
+  var foundImg
+  var section
+
+  for (var [key, value] of Object.entries(imgState)) {
+
+    if (key === "imgQueue") {
+      foundImg = value.find((d) => {
+        return d.id === img.id
+      })
+
+    }
+    /* else if (key === "sections") {
+      array.map((d, i) => {
+
+        if (img != undefined)
+          img = d["imgs"].find((d) => d.id === img.id)
+
+        else
+          section = d
+      })
+    } else if ( key === "dragging") {
+      img = array.find((d) => d.id === img.id)
+    }
+*/
+    if (foundImg !== undefined)
+      break;
+    
+  }
+  console.log(img.id, section)
+  return { img, section, key }
 }
 
 // ------------------------------------
@@ -91,9 +141,20 @@ const ACTION_HANDLERS = {
     ...state,
     sections: [...state.sections, action.payload]
   }),
-  [MOVE_IMG]: (state, action) => ({
+  [MOVE_IMG]: (state, action) => {
+
+
+
+
+    return {
+      ...state,
+      sections: [...state.sections,]
+    }
+  },
+
+  [HOLD_DRAG]: (state, action) => ({
     ...state,
-    sections: []
+    dragging: [...state.dragging, action.payload]
   })
 }
 
@@ -101,8 +162,9 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  sections: [],
-  imgQueue: []
+  "sections": [],
+  "imgQueue": [],
+  "dragging": [],
 }
 
 export default function Reducer(state = initialState, action) {

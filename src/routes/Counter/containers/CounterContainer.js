@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addImage, addSection  } from '../modules/counter'
+import { addImage, addSection, holdDragAction  } from '../modules/counter'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -14,7 +14,8 @@ import page from '../components/ImgOrganizer'
 
 const mapDispatchToProps = (dispatch) => ({
   addImage : (e) => dispatch(addImage(e)),
-  addSection : () => dispatch(addSection())
+  addSection : () => dispatch(addSection()),
+  holdDrag   : (img) => dispatch(holdDragAction(img))
 })
 
 const mapStateToProps = (state) => ({
