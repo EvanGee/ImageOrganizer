@@ -5,7 +5,7 @@ export const newImg = () => ({
     id: uuid.v4()
 })
 
-export const newSection = () => ({
-    name: "New Section",
-    imgs: []
+export const newSection = (name = "New Section", imgs) => ({
+    name,
+    imgs: [...imgs]
 })

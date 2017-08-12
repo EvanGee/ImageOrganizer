@@ -11,6 +11,7 @@ export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
 export const MOVE_IMG = "MOVE_IMG"
 export const HOLD_DRAG = "HOLD_DRAG"
+export const REMOVE_IMG = "REMOVE_IMG"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -30,22 +31,11 @@ const addSectionAction = (newSection) => ({
   payload: newSection
 })
 
-export const holdDragAction = (img) => {
-
-
-  return (dispatch, getState) => {
-    console.log("imgOrganizer ", getState().imgOrganizer )
-    findImg(getState().imgOrganizer, img)
-
-
-
-    return {
-      type: HOLD_DRAG,
-      payload: img
-    }
-  }
-}
-
+const removeImgAction = (newState, key) => ({
+  type: REMOVE_IMG,
+  payload: newState,
+  key
+})
 
 export const addImage = (evt) => {
 
@@ -75,59 +65,82 @@ export const addImage = (evt) => {
 
 export const addSection = () => {
   return (dispatch, getState) => {
-
     var newSection = {
       name: "New Section",
       imgs: []
     }
-
     dispatch(addSectionAction(newSection))
-
   }
 }
 
 
-export const moveImg = () => {
+export const moveImg = (img) => {
   return (dispatch, getState) => {
+    const state = getState().imgOrganizer
+    
+    const newState = removeImg(state, img)
 
-
-
+    //dispatch(removeImgAction(newState.newState, newState.keyValue))
+  
   }
 }
 
-
-const findImg = (imgState, img) => {
+// remove is a bool, if you would like to delete the img
+// from the state
+const removeImg = (imgState, img) => {
   var foundImg
   var section
+  var newSectionState = []
 
   for (var [key, value] of Object.entries(imgState)) {
 
     if (key === "imgQueue") {
-      foundImg = value.find((d) => {
+      var index
+      foundImg = value.find((d, i) => {
+        if (d.id === img.id) {
+          index = i
+          return true
+        }
+        else 
+          return false
+      })
+      if (foundImg.id !== undefined) {
+        
+        newSectionState = value.splice(index, 1)
+        newSectionState = value.splice(index, 0, foundImg)
+        console.log(newSectionState)
+        return {newState: {...imgState, [key]: newSectionState}, keyValue: key }
+      }
+
+    }
+    /*
+    else if (key === "sections") {
+      const sectionArr = imgState.sections
+      sectionArr.map((section, i) => {
+        foundImg = d.imgs.find((d) => {
+          return d.id === img.id
+        })
+        if (foundImg !== undefined) {
+          const newImgs = [...section.imgs]
+          const newSect = newSection(section.name, section.imgs)
+          const newSectionState = value.splice(i, 1, newSect)
+          return {newState: {...imgState, key: newSectionState, keyName}, keyValue: key }
+        }
+      })
+    }
+    else if (key === "dragging") {
+      foundImg = d.imgs.find((d) => {
         return d.id === img.id
       })
-
+      if (foundImg !== undefined) {
+        newSectionState = [...value, foundImg]
+        return {newState: {...imgState, key: newSectionState}, keyValue: key }
+      }
     }
-    /* else if (key === "sections") {
-      array.map((d, i) => {
-
-        if (img != undefined)
-          img = d["imgs"].find((d) => d.id === img.id)
-
-        else
-          section = d
-      })
-    } else if ( key === "dragging") {
-      img = array.find((d) => d.id === img.id)
-    }
-*/
-    if (foundImg !== undefined)
-      break;
-    
+    */
   }
-  console.log(img.id, section)
-  return { img, section, key }
 }
+
 
 // ------------------------------------
 // Action Handlers
@@ -142,20 +155,16 @@ const ACTION_HANDLERS = {
     sections: [...state.sections, action.payload]
   }),
   [MOVE_IMG]: (state, action) => {
-
-
-
-
     return {
       ...state,
       sections: [...state.sections,]
     }
   },
-
-  [HOLD_DRAG]: (state, action) => ({
+  [REMOVE_IMG] : (state, action) => ({
     ...state,
-    dragging: [...state.dragging, action.payload]
-  })
+    [action.key] : [...action.payload]
+  }),
+
 }
 
 // ------------------------------------
