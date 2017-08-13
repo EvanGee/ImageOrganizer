@@ -12,7 +12,9 @@ export const ADD_SECTION = "ADD_SECTION"
 export const MOVE_IMG = "MOVE_IMG"
 export const HOLD_DRAG = "HOLD_DRAG"
 export const REMOVE_IMG = "REMOVE_IMG"
-export const TEST_STATE_CHANGE = "TEST_STATE_CHANGE"
+export const REMOVE_IMG_QUEUE = "REMOVE_IMG_QUEUE"
+export const ADD_IMG_TO_SECTION = "ADD_IMG_TO_SECTION"
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -22,9 +24,10 @@ const addImageAction = (newImg) => ({
   payload: newImg
 })
 
-const moveImgAction = (oldSection, newSection, Img) => ({
+const moveImgAction = (newSection, Img) => ({
   type: MOVE_IMG,
-  payload: { oldSection, newSection, Img }
+  payload: Img,
+  section: newSection
 })
 
 const addSectionAction = (newSection) => ({
@@ -32,11 +35,30 @@ const addSectionAction = (newSection) => ({
   payload: newSection
 })
 
-const removeImgAction = (newState, key) => ({
+const removeImg_Sections = (newState, key) => ({
   type: REMOVE_IMG,
   payload: newState,
-  key
+  key,
 })
+
+const removeImg_Queue = (newState) => ({
+  type: REMOVE_IMG_QUEUE,
+  payload: newState,
+})
+
+const sectionAddImage = (sectionId, img) => ({
+  type: ADD_IMG_TO_SECTION,
+  payload: img,
+  section: sectionId
+})
+
+export const addToSection = (sectionId, Img) => {
+  return (dispatch, getState) => {
+
+    dispatch(sectionAddImage(sectionId, Img))
+
+  }
+}
 
 export const addImage = (evt) => {
 
@@ -77,15 +99,12 @@ export const addSection = () => {
 
 export const moveImg = (img) => {
   return (dispatch, getState) => {
-    //const state = getState().imgOrganizer
-    dispatch({
-      type: TEST_STATE_CHANGE,
-      payload: 1
-    })
-    console.log(getState())
-    //const newState = removeImg(state, img)
-    //dispatch(removeImgAction(newState.newState, newState.keyValue))
-  
+    const state = getState().imgOrganizer
+    const ImgLocation = removeImg(state, img)
+
+    if (ImgLocation.path === "imgQueue") {
+      dispatch(removeImg_Queue(ImgLocation.newArray, ImgLocation.path))
+    }
   }
 }
 
@@ -94,7 +113,7 @@ export const moveImg = (img) => {
 const removeImg = (imgState, img) => {
   var foundImg
   var section
-  var newSectionState = []
+  var newArray = []
 
   for (var [key, value] of Object.entries(imgState)) {
 
@@ -105,17 +124,13 @@ const removeImg = (imgState, img) => {
           index = i
           return true
         }
-        else 
+        else
           return false
       })
       if (foundImg.id !== undefined) {
-        
-        newSectionState = value.splice(index, 1)
-        newSectionState = value.splice(index, 0, foundImg)
-        console.log(newSectionState)
-        return {newState: {...imgState, [key]: newSectionState}, keyValue: key }
+        newArray = value.splice(index, 1)
+        return { newArray: value, path: "imgQueue", foundImg }
       }
-
     }
     /*
     else if (key === "sections") {
@@ -145,36 +160,39 @@ const removeImg = (imgState, img) => {
   }
 }
 
+const insertImg = (state, img, sectionOffset) => {
+  for (var [key, value] of Object.entries(imgState)) {
 
+    if (key === "") { }
+
+  }
+
+}
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [ADD_IMAGE]: (state, action) => ({
-    ...state,
-    imgQueue: [...state.imgQueue, action.payload]
-  }),
-  [ADD_SECTION]: (state, action) => ({
-    ...state,
-    sections: [...state.sections, action.payload]
-  }),
-  [MOVE_IMG]: (state, action) => {
-    return {
-      ...state,
-      sections: [...state.sections,]
-    }
-  },
-  [REMOVE_IMG] : (state, action) => ({
-    ...state,
-    [action.key] : [...action.payload]
-  }),
-
-  [TEST_STATE_CHANGE] : (state, action) => {
-
-    state["ADD"] += action.payload
+  [ADD_IMAGE]: (state, action) => {
+    imgQueue: state["imgQueue"].push(action.payload)
     return state
   },
-
+  [ADD_SECTION]: (state, action) => {
+    sections: state.sections.push(action.payload)
+    return state
+  },
+  [REMOVE_IMG_QUEUE]: (state, action) => {
+    state.imgQueue = action.payload
+    return state
+  },
+  [MOVE_IMG]: (state, action) => {
+    state[action.section].push(action.payload)
+    return state
+  },
+  [ADD_IMG_TO_SECTION]: (state, action) => {
+    console.log(action)
+    //insertImg(state.sections, action.payload, locationbar)
+    return state
+  }
 }
 
 // ------------------------------------

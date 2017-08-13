@@ -1,34 +1,29 @@
 import React from 'react';
 import Image from "./Image"
 
+const Section = ({section, addToSection}) => {
+  
+  const drop = (e) => {
+    e.preventDefault();
 
+    var imgId = e.dataTransfer.getData("text");
+    var child = document.getElementById(imgId)
 
+    var oldSection = child.parentElement
+    var newSection = e.target
+    var newSectionId = newSection.id
+    console.log(newSectionId)
+    console.log(e.target)
+    var oldSectionId = oldSection.id
+    //addToSection(newSectionId, {id: imgId, src: child.src})
+  }
+  
   const allowDrop = (e) => {
     e.preventDefault();
   }
 
-  const drop = (e) => {
-    e.preventDefault();
-
-    var data = e.dataTransfer.getData("text");
-    var child = document.getElementById(data)
-
-    var oldSection = child.parentElement
-    var newSection = e.target
-    //newSection.appendChild(child);
-
-    var newSectionId = newSection.id.substring(1)
-    var oldSectionId = oldSection.id.substring(1)
-
-    //console.log(newSectionId + "oldSection: " + oldSectionId)
-  }
-
-
-
-
-const Section = ({ section, i }) => {
     return (
-            <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className="sections" id={":" + section.name} >
+            <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className="sections" id={section.id} >
     
                 {section.name}
                 {
