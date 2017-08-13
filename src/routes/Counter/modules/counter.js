@@ -12,6 +12,7 @@ export const ADD_SECTION = "ADD_SECTION"
 export const MOVE_IMG = "MOVE_IMG"
 export const HOLD_DRAG = "HOLD_DRAG"
 export const REMOVE_IMG = "REMOVE_IMG"
+export const TEST_STATE_CHANGE = "TEST_STATE_CHANGE"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -76,10 +77,13 @@ export const addSection = () => {
 
 export const moveImg = (img) => {
   return (dispatch, getState) => {
-    const state = getState().imgOrganizer
-    
-    const newState = removeImg(state, img)
-
+    //const state = getState().imgOrganizer
+    dispatch({
+      type: TEST_STATE_CHANGE,
+      payload: 1
+    })
+    console.log(getState())
+    //const newState = removeImg(state, img)
     //dispatch(removeImgAction(newState.newState, newState.keyValue))
   
   }
@@ -165,6 +169,12 @@ const ACTION_HANDLERS = {
     [action.key] : [...action.payload]
   }),
 
+  [TEST_STATE_CHANGE] : (state, action) => {
+
+    state["ADD"] += action.payload
+    return state
+  },
+
 }
 
 // ------------------------------------
@@ -176,8 +186,12 @@ const initialState = {
   "dragging": [],
 }
 
+const deepCopy = (state) => {
+  return JSON.parse(JSON.stringify(state));
+}
+
 export default function Reducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
-  return handler ? handler(state, action) : state
+  return handler ? handler(deepCopy(state), action) : state
 }
