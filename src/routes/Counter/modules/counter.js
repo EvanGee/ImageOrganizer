@@ -88,11 +88,8 @@ export const addImage = (evt) => {
 
 export const addSection = () => {
   return (dispatch, getState) => {
-    var newSection = {
-      name: "New Section",
-      imgs: []
-    }
-    dispatch(addSectionAction(newSection))
+    var newSec = newSection("name", [])
+    dispatch(addSectionAction(newSec))
   }
 }
 
@@ -189,7 +186,7 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
-    console.log(action)
+
     //insertImg(state.sections, action.payload, locationbar)
     return state
   }

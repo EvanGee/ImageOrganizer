@@ -8,14 +8,9 @@ const Section = ({section, addToSection}) => {
 
     var imgId = e.dataTransfer.getData("text");
     var child = document.getElementById(imgId)
-
     var oldSection = child.parentElement
-    var newSection = e.target
-    var newSectionId = newSection.id
-    console.log(newSectionId)
-    console.log(e.target)
-    var oldSectionId = oldSection.id
-    //addToSection(newSectionId, {id: imgId, src: child.src})
+
+    addToSection(section.id, {id: imgId, src: child.src})
   }
   
   const allowDrop = (e) => {
@@ -25,7 +20,7 @@ const Section = ({section, addToSection}) => {
     return (
             <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className="sections" id={section.id} >
     
-                {section.name}
+                {section.id}
                 {
                     section.imgs.map((d, i)=><Image img={d} i={i}/>)
                 } 
