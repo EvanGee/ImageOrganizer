@@ -22,7 +22,7 @@ const Section = ({section, addToSection}) => {
     
                 {section.id}
                 {
-                    section.imgs.map((d, i)=><Image img={d} i={i}/>)
+                    section.imgs.map((d, i)=><Image img={d} i={i} key={i}/>)
                 } 
             </div>
     )

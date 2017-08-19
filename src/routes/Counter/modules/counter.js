@@ -54,7 +54,7 @@ const sectionAddImage = (sectionId, img) => ({
 
 export const addToSection = (sectionId, Img) => {
   return (dispatch, getState) => {
-
+    console.log(sectionId, Img)
     dispatch(sectionAddImage(sectionId, Img))
 
   }
@@ -157,14 +157,24 @@ const removeImg = (imgState, img) => {
   }
 }
 
-const insertImg = (state, img, sectionOffset) => {
-  for (var [key, value] of Object.entries(imgState)) {
+//only does section insers
+const insertImg = (state, img, sectionId) => {
+  for (var [key, value] of Object.entries(state)) {
 
-    if (key === "") { }
+    if (key === "sections") {
+      value.find((d) => {
+        if (d.id === sectionId) {
+          d.imgs.push(img)
+          return true
+        }
+        else
+          return false
+      })
 
+    }
   }
-
 }
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -187,7 +197,7 @@ const ACTION_HANDLERS = {
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
 
-    //insertImg(state.sections, action.payload, locationbar)
+    insertImg(state, action.payload, action.section)
     return state
   }
 }
