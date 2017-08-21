@@ -22,9 +22,7 @@ export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, holdDra
       </div>
 
 
-      {
-        imgQueue.map((d, i)=> <Image img={d} key={i} holdDrag={holdDrag} />)
-      }
+      <Section section={imgQueue} addToSection={addToSection} />
       {
         sections.map((d, i) => <Section section={d} key={i} addToSection={addToSection}/>)
       }
@@ -34,7 +32,7 @@ export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, holdDra
   )
 }
 imgOrganizer.propTypes = {
-  imgQueue: PropTypes.array.isRequired,
+
 }
 
 export default imgOrganizer

@@ -20,7 +20,7 @@ const Section = ({section, addToSection}) => {
     return (
             <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className="sections" id={section.id} >
     
-                {section.id}
+                {section.name}
                 {
                     section.imgs.map((d, i)=><Image img={d} i={i} key={i}/>)
                 } 

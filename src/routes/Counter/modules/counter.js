@@ -92,45 +92,20 @@ export const addSection = () => {
   }
 }
 
+const removeImg = (state, img) => {
 
-export const moveImg = (img) => {
-  return (dispatch, getState) => {
-    const state = getState().imgOrganizer
-    const ImgLocation = removeImg(state, img)
-
-    if (ImgLocation.path === "imgQueue") {
-      dispatch(removeImg_Queue(ImgLocation.newArray, ImgLocation.path))
-    }
-  }
-}
-
-// remove is a bool, if you would like to delete the img
-// from the state
-const removeImg = (imgState, img) => {
-  var foundImg
-  var section
-  var newArray = []
-
-  for (var [key, value] of Object.entries(imgState)) {
+  for (var [key, value] of Object.entries(state)) {
 
     if (key === "imgQueue") {
-      var index
-      foundImg = value.find((d, i) => {
-        if (d !== undefined && d.id === img.id) {
-          index = i
-          return true
-        }
-        else
-          return false
+      state.imgQueue.imgs.find((d, i) => {
+          if (d !== undefined && d.id === img.id) {
+            state.imgQueue.imgs.splice(i, 1)
+          }
       })
-      if (foundImg !== undefined) {
-        newArray = value.splice(index, 1)
-        return true
-      }
     }
     
     else if (key === "sections") {
-      imgState.sections.map((section, i) => {
+      state.sections.map((section, i) => {
         section.imgs.find((d, i) => {
           if (d !== undefined && d.id === img.id) {
             section.imgs.splice(i, 1)
@@ -138,17 +113,6 @@ const removeImg = (imgState, img) => {
         })
       })
     }
-    /*
-    else if (key === "dragging") {
-      foundImg = d.imgs.find((d) => {
-        return d.id === img.id
-      })
-      if (foundImg !== undefined) {
-        newSectionState = [...value, foundImg]
-        return {newState: {...imgState, key: newSectionState}, keyValue: key }
-      }
-    }
-    */
   }
 }
 
@@ -179,7 +143,7 @@ const insertImg = (state, key, img, sectionId) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [ADD_IMAGE]: (state, action) => {
-    imgQueue: state["imgQueue"].push(action.payload)
+    state.imgQueue.imgs.push(action.payload)
     return state
   },
   [ADD_SECTION]: (state, action) => {
@@ -206,7 +170,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   "sections": [],
-  "imgQueue": [],
+  "imgQueue": newSection("ImgQueue", []),
   "dragging": [],
 }
 
