@@ -9,12 +9,8 @@
 import { newImg, newSection } from "./dataTypes"
 export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
-export const MOVE_IMG = "MOVE_IMG"
-export const HOLD_DRAG = "HOLD_DRAG"
-export const REMOVE_IMG = "REMOVE_IMG"
-export const REMOVE_IMG_QUEUE = "REMOVE_IMG_QUEUE"
 export const ADD_IMG_TO_SECTION = "ADD_IMG_TO_SECTION"
-
+export const ADD_IMG_TO_IMGQUEUE = "ADD_IMG_TO_IMGQUEUE"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -24,26 +20,9 @@ const addImageAction = (newImg) => ({
   payload: newImg
 })
 
-const moveImgAction = (newSection, Img) => ({
-  type: MOVE_IMG,
-  payload: Img,
-  section: newSection
-})
-
 const addSectionAction = (newSection) => ({
   type: ADD_SECTION,
   payload: newSection
-})
-
-const removeImg_Sections = (newState, key) => ({
-  type: REMOVE_IMG,
-  payload: newState,
-  key,
-})
-
-const removeImg_Queue = (newState) => ({
-  type: REMOVE_IMG_QUEUE,
-  payload: newState,
 })
 
 const sectionAddImage = (sectionId, img) => ({
@@ -52,12 +31,19 @@ const sectionAddImage = (sectionId, img) => ({
   sectionId: sectionId
 })
 
+export const addToImgQueue = (sectionId, img) => ({
+  type: ADD_IMG_TO_IMGQUEUE,
+  payload: img,
+})
+
 export const addToSection = (sectionId, Img) => {
   return (dispatch, getState) => {
     dispatch(sectionAddImage(sectionId, Img))
 
   }
 }
+
+
 
 export const addImage = (evt) => {
 
@@ -129,11 +115,8 @@ const insertImg = (state, key, img, sectionId) => {
           return false
       })
     }
-    else if (key === "dragging") {
-      state.push(img)
-    }
     else if (key === "imgQueue"){
-      state.push(img)
+      state.imgs.push(img)
     }
   }
 
@@ -150,17 +133,14 @@ const ACTION_HANDLERS = {
     sections: state.sections.push(action.payload)
     return state
   },
-  [REMOVE_IMG_QUEUE]: (state, action) => {
-    state.imgQueue = action.payload
-    return state
-  },
-  [MOVE_IMG]: (state, action) => {
-    state[action.section].push(action.payload)
-    return state
-  },
   [ADD_IMG_TO_SECTION]: (state, action) => {
     removeImg(state, action.payload)
     insertImg(state.sections, "sections", action.payload, action.sectionId)
+    return state
+  },
+  [ADD_IMG_TO_IMGQUEUE]: (state, action) => {
+    removeImg(state, action.payload)
+    insertImg(state.imgQueue, "imgQueue", action.payload, null)
     return state
   }
 }
