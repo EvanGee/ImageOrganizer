@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "./Image"
 
-const Section = ({section, addToSection}) => {
+const Section = ({section, addToSection, classname}) => {
   
   const drop = (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ const Section = ({section, addToSection}) => {
   }
 
     return (
-            <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className="sections" id={section.id} >
+            <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className={classname} id={section.id} >
     
                 {section.name}
                 {

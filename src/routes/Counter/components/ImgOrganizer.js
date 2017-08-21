@@ -9,7 +9,7 @@ const drag = (e) => {
 
 export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, addToImgQueue, addToSection}) => {
   return (
-    <div style={{ margin: '0 auto' }} >
+    <div >
       <div className="App-header">
 
         <label className="dropButt">
@@ -20,13 +20,16 @@ export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, addToIm
         <button onClick={() => addSection()} className="sectionAddButt">Add A new section</button>
 
       </div>
-
-
-      <Section section={imgQueue} addToSection={addToImgQueue} />
-      {
-        sections.map((d, i) => <Section section={d} key={i} addToSection={addToSection}/>)
-      }
-      
+      <div className="row" >
+        <div className="col-3">
+        <Section section={imgQueue} addToSection={addToImgQueue} classname={"imgQueue"}/>
+        </div>
+        <div className="col-9">
+        {
+          sections.map((d, i) => <Section section={d} key={i} addToSection={addToSection} classname={"sections"} />)
+        }
+        </div>
+      </div>
       
     </div>
   )
