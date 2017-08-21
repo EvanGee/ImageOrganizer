@@ -11,11 +11,15 @@
   cursor: grab;
   height: 200px;
   width: 200px;
+  float:left;
+  margin:5px;
 }
+
 .sections {
   height: 200px;
   border: solid black 1px;
 }
+
 .imgQueue {
   height: 100%;
   border: solid black 1px;

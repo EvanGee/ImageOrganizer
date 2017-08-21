@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Section from "./Section"
 import Image from "./Image"
 
+
 const drag = (e) => {
   e.dataTransfer.setData("text", e.target.id);
 }
