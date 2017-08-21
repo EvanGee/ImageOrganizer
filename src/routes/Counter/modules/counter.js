@@ -49,12 +49,11 @@ const removeImg_Queue = (newState) => ({
 const sectionAddImage = (sectionId, img) => ({
   type: ADD_IMG_TO_SECTION,
   payload: img,
-  section: sectionId
+  sectionId: sectionId
 })
 
 export const addToSection = (sectionId, Img) => {
   return (dispatch, getState) => {
-    console.log(sectionId, Img)
     dispatch(sectionAddImage(sectionId, Img))
 
   }
@@ -117,33 +116,29 @@ const removeImg = (imgState, img) => {
     if (key === "imgQueue") {
       var index
       foundImg = value.find((d, i) => {
-        if (d.id === img.id) {
+        if (d !== undefined && d.id === img.id) {
           index = i
           return true
         }
         else
           return false
       })
-      if (foundImg.id !== undefined) {
+      if (foundImg !== undefined) {
         newArray = value.splice(index, 1)
-        return { newArray: value, path: "imgQueue", foundImg }
+        return true
       }
     }
-    /*
+    
     else if (key === "sections") {
-      const sectionArr = imgState.sections
-      sectionArr.map((section, i) => {
-        foundImg = d.imgs.find((d) => {
-          return d.id === img.id
+      imgState.sections.map((section, i) => {
+        section.imgs.find((d, i) => {
+          if (d !== undefined && d.id === img.id) {
+            section.imgs.splice(i, 1)
+          }
         })
-        if (foundImg !== undefined) {
-          const newImgs = [...section.imgs]
-          const newSect = newSection(section.name, section.imgs)
-          const newSectionState = value.splice(i, 1, newSect)
-          return {newState: {...imgState, key: newSectionState, keyName}, keyValue: key }
-        }
       })
     }
+    /*
     else if (key === "dragging") {
       foundImg = d.imgs.find((d) => {
         return d.id === img.id
@@ -157,12 +152,11 @@ const removeImg = (imgState, img) => {
   }
 }
 
-//only does section insers
-const insertImg = (state, img, sectionId) => {
-  for (var [key, value] of Object.entries(state)) {
+//instert into the specific state array
+const insertImg = (state, key, img, sectionId) => {
 
     if (key === "sections") {
-      value.find((d) => {
+      state.find((d) => {
         if (d.id === sectionId) {
           d.imgs.push(img)
           return true
@@ -170,10 +164,15 @@ const insertImg = (state, img, sectionId) => {
         else
           return false
       })
-
+    }
+    else if (key === "dragging") {
+      state.push(img)
+    }
+    else if (key === "imgQueue"){
+      state.push(img)
     }
   }
-}
+
 
 // ------------------------------------
 // Action Handlers
@@ -196,8 +195,8 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
-
-    insertImg(state, action.payload, action.section)
+    removeImg(state, action.payload)
+    insertImg(state.sections, "sections", action.payload, action.sectionId)
     return state
   }
 }
