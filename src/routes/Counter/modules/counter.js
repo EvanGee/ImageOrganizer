@@ -54,7 +54,6 @@ export const download = () => {
       if (section.imgs.length !== 0) {
         section.imgs.map((d) => {
           var blob = dataURItoBlob(d.src)
-          
           var file = new File([blob], section.name + "-01." + blob.type.split("/")[1], {type: blob.type})
           saveAs(file)
         })
