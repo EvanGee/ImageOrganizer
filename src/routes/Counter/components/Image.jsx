@@ -2,15 +2,28 @@ import React from 'react';
 
 
 
-const Section = ({ img, holdDrag }) => {
+const Image = ({ img, section }) => {
 
+    const onDragOver = (e, direction) => {
+        console.log(direction)
+        console.log(e.target)
+    }
+
+    const onDrop = (e, dir) => {
+        console.log(section.id)
+    }
     const drag = (e) => {
-        //holdDrag(img)
         e.dataTransfer.setData("text", img.id);
     }
 
-    return <img className="imgs" id={img.id} draggable="true" onDragStart={(e) => drag(e)} src={img.src} alt="" />
+    return (
+        <div className="imgs">
+            <div onDrop={(e)=>onDrop(e, "left")} style={{ width: "50%", float: "left"}}/>
+            <div onDragOver={(e)=>onDragOver(e, "right")} style={{ width: "50%", float: "right" }}/>
+            <img className="imgs" id={img.id} onDragStart={(e) => drag(e)}  draggable="true"  src={img.src} alt="" />
+        </div>
+    )
 
 }
 
-export default Section
+export default Image

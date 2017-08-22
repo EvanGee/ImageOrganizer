@@ -7,7 +7,7 @@
 // Constants
 // ------------------------------------
 import { newImg, newSection } from "./dataTypes"
-import {saveAs} from "file-saver"
+import { saveAs } from "file-saver"
 import JSZip from "jszip"
 export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
@@ -56,33 +56,30 @@ export const download = () => {
       if (section.imgs.length !== 0) {
         section.imgs.map((d, i) => {
           var blob = dataURItoBlob(d.src)
-          var name = section.name + i +"." + blob.type.split("/")[1]
-          //var file = new File([blob], section.name + "-01." + blob.type.split("/")[1], {type: blob.type})
-          imageZip.file(name, blob, {base64: true});
+          var name = section.name + i + "." + blob.type.split("/")[1]
+          imageZip.file(name, blob, { base64: true });
           console.log("done")
         })
       }
     })
 
-    zip.generateAsync({type:"blob"})
-    .then(function(content) {
-        // see FileSaver.js
+    zip.generateAsync({ type: "blob" })
+      .then(function (content) {
         saveAs(content, "Images.zip");
-    });
-    //dispatch({ type: DOWNLOAD })
+      });
   }
 }
 
-//not my code
+//Special thanks to mal hasaranga perera for the binary.charCode idea
 function dataURItoBlob(dataURI) {
   var metaData = dataURI.split(',')
   var binary = atob(metaData[1]);
   var type = metaData[0].split("/")[1].split(";")[0]
   var array = [];
-  for(var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
+  for (var i = 0; i < binary.length; i++) {
+    array.push(binary.charCodeAt(i));
   }
-  return new Blob([new Uint8Array(array)], {type: 'image/'+ type});
+  return new Blob([new Uint8Array(array)], { type: 'image/' + type });
 }
 
 

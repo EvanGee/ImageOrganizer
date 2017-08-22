@@ -23,9 +23,11 @@ const Section = ({ section, addToSection, classname, addImage }) => {
         <span>Upload Files</span>
         <input type="file" style={{ display: "none" }} multiple onChange={(e) => addImage(e)} />
       </label>
+      <div className="QueueContainer center" >
       {
         section.imgs.map((d, i) => <Image img={d} i={i} key={i} />)
       }
+      </div>
     </div>
   )
 }
