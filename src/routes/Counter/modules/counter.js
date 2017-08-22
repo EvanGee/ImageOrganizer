@@ -53,18 +53,31 @@ export const download = () => {
     state.imgOrganizer.sections.map((section) => {
       if (section.imgs.length !== 0) {
         section.imgs.map((d) => {
-          var file = new File([d.src], section.name + "-01.png", {type: "image"})
+          var blob = dataURItoBlob(d.src)
           
+          var file = new File([blob], section.name + "-01." + blob.type.split("/")[1], {type: blob.type})
           saveAs(file)
         })
       }
     })
-    //var myFile = new File([file], "HelloWorld.pdf", { type: "image" })
-    //fileArray.push(file)
 
     dispatch({ type: DOWNLOAD })
   }
 }
+
+//not my code
+function dataURItoBlob(dataURI) {
+  var metaData = dataURI.split(',')
+  var binary = atob(metaData[1]);
+  var type = metaData[0].split("/")[1].split(";")[0]
+  var array = [];
+  for(var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+  }
+  return new Blob([new Uint8Array(array)], {type: 'image/'+ type});
+}
+
+
 
 export const updateName = (sectionId, name) => ({
   type: UPDATE_NAME,
