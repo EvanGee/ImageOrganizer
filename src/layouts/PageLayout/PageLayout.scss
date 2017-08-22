@@ -9,14 +9,25 @@
 
 .imgs {
   cursor: grab;
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   float:left;
-  margin:5px;
 }
 
 .sections {
   height: 200px;
+  border: solid black 1px;
+}
+
+.sectionNames {
+  width: 100%;
+  height: 30px;
+  border: solid black 1px;
+}
+
+.dropButt{
+  width: 100%;
+  height: 30px;
   border: solid black 1px;
 }
 

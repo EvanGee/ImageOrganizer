@@ -19,8 +19,12 @@ const Section = ({section, addToSection, classname}) => {
 
     return (
             <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className={classname} id={section.id} >
-    
+              <div className="sectionNames btn btn-primary">
+                <div>
+                    
+                </div>
                 {section.name}
+              </div>
                 {
                     section.imgs.map((d, i)=><Image img={d} i={i} key={i}/>)
                 } 

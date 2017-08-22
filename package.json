@@ -20,10 +20,11 @@
   "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.0.0-alpha",
+    "bootstrap": "^4.0.0-beta",
     "compression": "^1.6.2",
     "express": "^4.14.0",
     "object-assign": "^4.1.1",
+    "octicons": "^6.0.1",
     "promise": "^7.1.1",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
