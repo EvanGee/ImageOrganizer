@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from "./Image"
 
-const Section = ({section, addToSection, classname}) => {
+const Section = ({section, addToSection, classname, updateName}) => {
   
   const drop = (e) => {
     e.preventDefault();
@@ -17,12 +17,17 @@ const Section = ({section, addToSection, classname}) => {
     e.preventDefault();
   }
 
+  const updateSecName = (e) => {
+    updateName(section.id, e.target.value)
+
+  }
+
     return (
             <div onDrop={(e) =>drop(e)} onDragOver={(e)=>allowDrop(e)} className={classname} id={section.id} >
-              <div>
-                {section.name + " "}
-                <span className="fa fa-pencil fa-2x" aria-hidden="true"></span>
-              </div>
+              <div className="sectionNames" >
+                <input type="text" name="name" value={section.name} onChange={updateSecName}/>
+                </div>
+              
                 {
                     section.imgs.map((d, i)=><Image img={d} i={i} key={i}/>)
                 } 
@@ -32,4 +37,5 @@ const Section = ({section, addToSection, classname}) => {
 
 export default Section
 
-
+//<span className="fa fa-pencil fa-2x" aria-hidden="true" onClick></span>
+              

@@ -7,10 +7,13 @@
 // Constants
 // ------------------------------------
 import { newImg, newSection } from "./dataTypes"
+import {saveAs} from "file-saver"
 export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
 export const ADD_IMG_TO_SECTION = "ADD_IMG_TO_SECTION"
 export const ADD_IMG_TO_IMGQUEUE = "ADD_IMG_TO_IMGQUEUE"
+export const UPDATE_NAME = "UPDATE_NAME"
+export const DOWNLOAD = "DOWNLOAD"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -43,6 +46,31 @@ export const addToSection = (sectionId, Img) => {
   }
 }
 
+export const download = () => {
+  return (dispatch, getState) => {
+
+    var state = getState()
+    state.imgOrganizer.sections.map((section) => {
+      if (section.imgs.length !== 0) {
+        section.imgs.map((d) => {
+          var file = new File([d.src], section.name + "-01.png", {type: "image"})
+          
+          saveAs(file)
+        })
+      }
+    })
+    //var myFile = new File([file], "HelloWorld.pdf", { type: "image" })
+    //fileArray.push(file)
+
+    dispatch({ type: DOWNLOAD })
+  }
+}
+
+export const updateName = (sectionId, name) => ({
+  type: UPDATE_NAME,
+  payload: name,
+  sectionId
+})
 
 
 export const addImage = (evt) => {
@@ -65,15 +93,14 @@ export const addImage = (evt) => {
       }
 
       reader.readAsDataURL(file);
-      //var myFile = new File([file], "HelloWorld.pdf", { type: "image" })
-      //fileArray.push(file)
+
     }
   }
 }
 
 export const addSection = () => {
   return (dispatch, getState) => {
-    var newSec = newSection("name", [])
+    var newSec = newSection("Section Name", [])
     dispatch(addSectionAction(newSec))
   }
 }
@@ -84,12 +111,12 @@ const removeImg = (state, img) => {
 
     if (key === "imgQueue") {
       state.imgQueue.imgs.find((d, i) => {
-          if (d !== undefined && d.id === img.id) {
-            state.imgQueue.imgs.splice(i, 1)
-          }
+        if (d !== undefined && d.id === img.id) {
+          state.imgQueue.imgs.splice(i, 1)
+        }
       })
     }
-    
+
     else if (key === "sections") {
       state.sections.map((section, i) => {
         section.imgs.find((d, i) => {
@@ -105,20 +132,20 @@ const removeImg = (state, img) => {
 //instert into the specific state array
 const insertImg = (state, key, img, sectionId) => {
 
-    if (key === "sections") {
-      state.find((d) => {
-        if (d.id === sectionId) {
-          d.imgs.push(img)
-          return true
-        }
-        else
-          return false
-      })
-    }
-    else if (key === "imgQueue"){
-      state.imgs.push(img)
-    }
+  if (key === "sections") {
+    state.find((d) => {
+      if (d.id === sectionId) {
+        d.imgs.push(img)
+        return true
+      }
+      else
+        return false
+    })
   }
+  else if (key === "imgQueue") {
+    state.imgs.push(img)
+  }
+}
 
 
 // ------------------------------------
@@ -142,6 +169,13 @@ const ACTION_HANDLERS = {
     removeImg(state, action.payload)
     insertImg(state.imgQueue, "imgQueue", action.payload, null)
     return state
+  },
+  [UPDATE_NAME]: (state, action) => {
+    state.sections.map((d) => {
+      if (d.id === action.sectionId)
+        d.name = action.payload
+    })
+    return state
   }
 }
 
@@ -149,7 +183,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  "sections": [],
+  "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
   "dragging": [],
 }
