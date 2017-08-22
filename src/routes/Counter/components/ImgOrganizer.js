@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Section from "./Section"
 import Image from "./Image"
 import QueueSection from "./QueueSection"
-import octicons from "octicons"
 const drag = (e) => {
   e.dataTransfer.setData("text", e.target.id);
 }
@@ -14,10 +13,7 @@ export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, addToIm
       <div className="App-header">
         <button onClick={() => addSection()} className="sectionAddButt">Add A new section</button>
       </div>
-      <div>
-      <span className="octicon octicon-clippy"></span>
-        </div>
-
+        
       <div className="row" >
         <div className="col-3">
           <QueueSection section={imgQueue} addToSection={addToImgQueue} classname={"imgQueue"} addImage={addImage} />
