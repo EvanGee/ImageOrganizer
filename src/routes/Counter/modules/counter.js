@@ -8,6 +8,7 @@
 // ------------------------------------
 import { newImg, newSection } from "./dataTypes"
 import {saveAs} from "file-saver"
+import JSZip from "jszip"
 export const ADD_IMAGE = "ADD_IMAGE"
 export const ADD_SECTION = "ADD_SECTION"
 export const ADD_IMG_TO_SECTION = "ADD_IMG_TO_SECTION"
@@ -48,19 +49,27 @@ export const addToSection = (sectionId, Img) => {
 
 export const download = () => {
   return (dispatch, getState) => {
-
+    var zip = JSZip()
     var state = getState()
     state.imgOrganizer.sections.map((section) => {
+      var imageZip = zip.folder(section.name);
       if (section.imgs.length !== 0) {
-        section.imgs.map((d) => {
+        section.imgs.map((d, i) => {
           var blob = dataURItoBlob(d.src)
-          var file = new File([blob], section.name + "-01." + blob.type.split("/")[1], {type: blob.type})
-          saveAs(file)
+          var name = section.name + i +"." + blob.type.split("/")[1]
+          //var file = new File([blob], section.name + "-01." + blob.type.split("/")[1], {type: blob.type})
+          imageZip.file(name, blob, {base64: true});
+          console.log("done")
         })
       }
     })
 
-    dispatch({ type: DOWNLOAD })
+    zip.generateAsync({type:"blob"})
+    .then(function(content) {
+        // see FileSaver.js
+        saveAs(content, "Images.zip");
+    });
+    //dispatch({ type: DOWNLOAD })
   }
 }
 
