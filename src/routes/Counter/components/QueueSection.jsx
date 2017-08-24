@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from "./Image"
 
+import DragSortableList from 'react-drag-sortable'
 const Section = ({ section, addToSection, classname, addImage }) => {
 
   const drop = (e) => {
@@ -17,6 +18,13 @@ const Section = ({ section, addToSection, classname, addImage }) => {
     e.preventDefault();
   }
 
+  var onSort = function(sortedList, dropEvent) {
+    console.log("sortedList", sortedList, dropEvent);
+ }
+
+
+
+
   return (
     <div onDrop={(e) => drop(e)} onDragOver={(e) => allowDrop(e)} className={classname} id={section.id} >
       <label className="dropButt">
@@ -24,9 +32,9 @@ const Section = ({ section, addToSection, classname, addImage }) => {
         <input type="file" style={{ display: "none" }} multiple onChange={(e) => addImage(e)} />
       </label>
       <div className="QueueContainer center" >
-      {
-        section.imgs.map((d, i) => <Image img={d} i={i} key={i} />)
-      }
+        <DragSortableList items={section.imgs.map((d, i) => ({ content: <Image img={d} i={i} key={i} section={section} /> }))}
+          onSort={onSort}
+          type="horizontal" />
       </div>
     </div>
   )

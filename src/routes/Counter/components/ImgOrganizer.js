@@ -8,12 +8,14 @@ const drag = (e) => {
 }
 
 export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, addToImgQueue, addToSection, updateName, download }) => {
+  
+
   return (
     <div >
       <div className="App-header">
-     
-      <span className="fa fa-cloud-download fa-4x downloadButn col-3" aria-hidden="true" onClick={download}></span>
-    
+
+        <span className="fa fa-cloud-download fa-4x downloadButn col-3" aria-hidden="true" onClick={download}></span>
+
         <button onClick={() => addSection()} className="sectionAddButt">Add A new section</button>
       </div>
 
@@ -29,7 +31,7 @@ export const imgOrganizer = ({ sections, imgQueue, addImage, addSection, addToIm
 
       </div>
       <div className="row">
-            </div>
+      </div>
     </div>
   )
 }
@@ -39,4 +41,3 @@ imgOrganizer.propTypes = {
 
 export default imgOrganizer
 //<span className="fa fa-trash fa-4x trashButn col-9" aria-hidden="true"></span>
-      
