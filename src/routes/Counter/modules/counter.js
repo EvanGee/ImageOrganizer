@@ -51,12 +51,15 @@ export const download = () => {
   return (dispatch, getState) => {
     var zip = JSZip()
     var state = getState()
-    state.imgOrganizer.sections.map((section) => {
+    state.imgOrganizer.sections.map((section, i) => {
+      var prefix = i < 10 ? "0" + (i+1) + "-" : (i+1)
       var imageZip = zip.folder(section.name);
       if (section.imgs.length !== 0) {
-        section.imgs.map((d, i) => {
+        section.imgs.map((d, j) => {
           var blob = dataURItoBlob(d.src)
-          var name = section.name + i + "." + blob.type.split("/")[1]
+          var postfix = j < 10  ? "-0" + (j+1)  : "-" + (j+1)
+          var name =  prefix + section.name + postfix + "." + blob.type.split("/")[1] 
+
           imageZip.file(name, blob, { base64: true });
           console.log("done")
         })
