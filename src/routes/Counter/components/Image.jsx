@@ -11,10 +11,14 @@ const Image = ({ img, section }) => {
        // e.dataTransfer.setData("text", img.id);
     }
 
+    const dragOver = (e) => {
+        console.log(img.id)
+    }
+
     return (
         <div className="imgs">
 
-           <img className="imgs" id={img.id} onDragStart={(e) => drag(e)}  draggable="true"  src={img.src} alt="" />
+           <img onDragOver={(e)=>dragOver(e)} className="imgs" id={img.id} onDragStart={(e) => drag(e)}  draggable="true"  src={img.src} alt="" />
         </div>
     )
 
