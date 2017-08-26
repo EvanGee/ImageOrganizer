@@ -6,9 +6,17 @@ const Section = ({section, addToSection, classname, updateName}) => {
   
   const drop = (e) => {
     e.preventDefault();
-    var imgId = e.dataTransfer.getData("text");
-    var child = document.getElementById(imgId)
-    addToSection(section.id, {id: imgId, src: child.src})
+    var imgInfo = e.dataTransfer.getData("text")
+    imgInfo = JSON.parse(imgInfo)
+    console.log(imgInfo)
+    if (imgInfo.section.id === section.id){
+      console.log("THIS IS THE SAME SECTION")
+    } else {
+      console.log("THIS IS A DIFFERENT SECTION")
+    }
+
+    //var child = document.getElementById(imgId)
+   addToSection(section.id, imgInfo.img)
   }
   
   const allowDrop = (e) => {
@@ -30,9 +38,9 @@ const Section = ({section, addToSection, classname, updateName}) => {
               <div className="sectionNames" >
                 <input type="text" name="name" value={section.name} onChange={updateSecName}/>
                 </div>
-                <DragSortableList items={section.imgs.map((d, i) => ({content: <Image img={d} i={i} key={i} section={section}/>}))}
-                 onSort={onSort} 
-                type="horizontal" />
+                {
+                section.imgs.map((d, i) => <Image img={d} i={i} key={i} section={section}/>)
+                }
             </div>
     )
 }

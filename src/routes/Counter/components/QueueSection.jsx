@@ -7,20 +7,27 @@ const Section = ({ section, addToSection, classname, addImage }) => {
   const drop = (e) => {
     e.preventDefault();
 
-    var imgId = e.dataTransfer.getData("text");
-    var child = document.getElementById(imgId)
-    var oldSection = child.parentElement
+    var imgInfo = e.dataTransfer.getData("text")
+    imgInfo = JSON.parse(imgInfo)
+    console.log(imgInfo)
+    if (imgInfo.section.id === section.id){
+      console.log("THIS IS THE SAME SECTION")
+    } else {
+      console.log("THIS IS A DIFFERENT SECTION")
+    }
+   // var imgId = e.dataTransfer.getData("text");
+    //var child = document.getElementById(imgId)
 
-    addToSection(section.id, { id: imgId, src: child.src })
+    //addToSection(section.id, { id: imgId, src: child.src })
   }
 
   const allowDrop = (e) => {
     e.preventDefault();
   }
 
-  var onSort = function(sortedList, dropEvent) {
+  var onSort = function (sortedList, dropEvent) {
     console.log("sortedList", sortedList, dropEvent);
- }
+  }
 
 
 
@@ -32,9 +39,9 @@ const Section = ({ section, addToSection, classname, addImage }) => {
         <input type="file" style={{ display: "none" }} multiple onChange={(e) => addImage(e)} />
       </label>
       <div className="QueueContainer center" >
-        <DragSortableList items={section.imgs.map((d, i) => ({ content: <Image img={d} i={i} key={i} section={section} /> }))}
-          onSort={onSort}
-          type="horizontal" />
+        {
+          section.imgs.map((d, i) => <Image img={d} i={i} key={i} section={section} />)
+        }
       </div>
     </div>
   )
