@@ -15,6 +15,7 @@ export const ADD_IMG_TO_SECTION = "ADD_IMG_TO_SECTION"
 export const ADD_IMG_TO_IMGQUEUE = "ADD_IMG_TO_IMGQUEUE"
 export const UPDATE_NAME = "UPDATE_NAME"
 export const DOWNLOAD = "DOWNLOAD"
+export const MOVE_IMG = "MOVE_IMG"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -39,6 +40,13 @@ export const addToImgQueue = (sectionId, img) => ({
   type: ADD_IMG_TO_IMGQUEUE,
   payload: img,
 })
+
+export const move_img = (section, img) => ({
+  type: MOVE_IMG,
+  img,
+  section
+})
+
 
 export const addToSection = (sectionId, Img) => {
   return (dispatch, getState) => {
@@ -196,7 +204,18 @@ const ACTION_HANDLERS = {
       if (d.id === action.sectionId)
         d.name = action.payload
     })
-    return state
+    return states
+  },
+  [MOVE_IMG]: (state, action) => {
+    state.sections.map((d, i) => {
+      if (d.id === action.section.id) {
+        d.imgs.map((d, i)=>{
+          if (d.id === action.img.id) {
+            console.log("PLACEHOLDER")
+          }
+        })
+      }
+    })
   }
 }
 

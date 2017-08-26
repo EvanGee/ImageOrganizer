@@ -11,12 +11,12 @@ const Section = ({section, addToSection, classname, updateName}) => {
     console.log(imgInfo)
     if (imgInfo.section.id === section.id){
       console.log("THIS IS THE SAME SECTION")
+      //insert image here
+      console.log(section.imgs)
     } else {
       console.log("THIS IS A DIFFERENT SECTION")
-    }
-
-    //var child = document.getElementById(imgId)
-   addToSection(section.id, imgInfo.img)
+      addToSection(section.id, imgInfo.img)
+    }   
   }
   
   const allowDrop = (e) => {
