@@ -16,6 +16,7 @@ export const ADD_IMG_TO_IMGQUEUE = "ADD_IMG_TO_IMGQUEUE"
 export const UPDATE_NAME = "UPDATE_NAME"
 export const DOWNLOAD = "DOWNLOAD"
 export const MOVE_IMG = "MOVE_IMG"
+export const PREPARE_MOVE = "PREPARE_MOVE"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -43,8 +44,13 @@ export const addToImgQueue = (sectionId, img) => ({
 
 export const move_img = (section, img) => ({
   type: MOVE_IMG,
-  img,
-  section
+  section,
+  img
+})
+
+export const prepare_move = (imgToDropOn) => ({
+  type: PREPARE_MOVE,
+  imgToDropOn
 })
 
 
@@ -204,18 +210,32 @@ const ACTION_HANDLERS = {
       if (d.id === action.sectionId)
         d.name = action.payload
     })
-    return states
+    return state
   },
   [MOVE_IMG]: (state, action) => {
-    state.sections.map((d, i) => {
-      if (d.id === action.section.id) {
-        d.imgs.map((d, i)=>{
-          if (d.id === action.img.id) {
-            console.log("PLACEHOLDER")
+    console.log(action)
+   // console.log("MOVE_IMG")
+    state.sections.map((section, i) => {
+     // console.log("ANY SECTIONS HERE? " + section.id)
+    //  console.log(action)
+      if (section.id === action.section.id) {
+       // console.log("MATCHING SECTIONS")
+        section.imgs.map((img, i) => {
+          //console.log("INSIDE LOOP" + section)
+          if (img.id === state.dragging.id) {
+            removeImg(state, action.img)
+            section.imgs.splice(i, 0, action.img)
+           // console.log(section)
           }
         })
       }
     })
+
+    return state
+  },
+  [PREPARE_MOVE]: (state, action) => {
+    state.dragging = action.imgToDropOn
+    return state
   }
 }
 
@@ -225,7 +245,7 @@ const ACTION_HANDLERS = {
 const initialState = {
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
-  "dragging": [],
+  "dragging": "",
 }
 
 const deepCopy = (state) => {

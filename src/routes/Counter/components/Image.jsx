@@ -2,17 +2,15 @@ import React from 'react';
 
 
 
-const Image = ({ img, section }) => {
+const Image = ({ img, section, prepareMove }) => {
 
-
+    
     const drag = (e) => {
         e.dataTransfer.setData("text", JSON.stringify({img, section}))
-       // console.log(section.name)
-       // e.dataTransfer.setData("text", img.id);
     }
-
+    
     const dragOver = (e) => {
-        console.log(img.id)
+        prepareMove(img)
     }
 
     return (
