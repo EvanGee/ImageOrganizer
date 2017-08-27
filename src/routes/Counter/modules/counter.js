@@ -213,19 +213,12 @@ const ACTION_HANDLERS = {
     return state
   },
   [MOVE_IMG]: (state, action) => {
-    console.log(action)
-   // console.log("MOVE_IMG")
     state.sections.map((section, i) => {
-     // console.log("ANY SECTIONS HERE? " + section.id)
-    //  console.log(action)
       if (section.id === action.section.id) {
-       // console.log("MATCHING SECTIONS")
         section.imgs.map((img, i) => {
-          //console.log("INSIDE LOOP" + section)
           if (img.id === state.dragging.id) {
             removeImg(state, action.img)
             section.imgs.splice(i, 0, action.img)
-           // console.log(section)
           }
         })
       }
