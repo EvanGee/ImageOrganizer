@@ -35,6 +35,7 @@ const Section = ({
     <div onDrop={(e) => drop(e)} onDragOver={(e) => allowDrop(e)} className={classname} id={section.id} >
       <div className="sectionNameContainer" >
         <input type="text" name="name" value={section.name} onChange={updateSecName} className="sectionName"/>
+        <span className="fa fa-times fa-2x closeX" aria-hidden="true" />
       </div>
       {
         section.imgs.map((d, i) => <Image img={d} i={i} key={i} {...{ section, prepareMove }} />)
