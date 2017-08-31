@@ -1,35 +1,24 @@
 import React from 'react';
 import Image from "./Image"
 
-import DragSortableList from 'react-drag-sortable'
-const Section = ({ section, addToSection, classname, addImage }) => {
+const Section = ({ section, addToImgQueue, classname, addImage, prepareMove, addToSection, moveImg }) => {
 
   const drop = (e) => {
     e.preventDefault();
-
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
-    console.log(imgInfo)
-    if (imgInfo.section.id === section.id){
-      console.log("THIS IS THE SAME SECTION")
-    } else {
-      console.log("THIS IS A DIFFERENT SECTION")
-    }
-   // var imgId = e.dataTransfer.getData("text");
-    //var child = document.getElementById(imgId)
+    if (imgInfo.section.id === section.id) {
+      moveImg(imgInfo.section, imgInfo.img)
 
-    //addToSection(section.id, { id: imgId, src: child.src })
+    } else {
+      addToImgQueue(section.id, imgInfo.img)
+    }
+
   }
 
   const allowDrop = (e) => {
     e.preventDefault();
   }
-
-  var onSort = function (sortedList, dropEvent) {
-    console.log("sortedList", sortedList, dropEvent);
-  }
-
-
 
 
   return (
@@ -40,7 +29,7 @@ const Section = ({ section, addToSection, classname, addImage }) => {
       </label>
       <div className="QueueContainer center" >
         {
-          section.imgs.map((d, i) => <Image img={d} i={i} key={i} section={section} />)
+          section.imgs.map((d, i) => <Image img={d} i={i} key={i} {...{ section, prepareMove }} />)
         }
       </div>
     </div>

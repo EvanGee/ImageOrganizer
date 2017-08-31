@@ -10,7 +10,7 @@ const Image = ({ img, section, prepareMove }) => {
         //var dragImg = document.createElement('img');
         //dragImg.src = img.src
         //e.dataTransfer.setDragImage(dragImg, 0, 0);
-        e.target.classList.add("dragging")
+        //e.target.classList.add("dragging")
 
     }
 
@@ -19,16 +19,16 @@ const Image = ({ img, section, prepareMove }) => {
     }
 
     const dragEnter = (e) => {
-        e.target.classList.add("draggedOver")
+        //e.target.classList.add("draggedOver")
     }
 
     const dragLeave = (e) => {
-        e.target.classList.remove("draggedOver")
+       // e.target.classList.remove("draggedOver")
     }
 
     const dragEnd = (e) => {
-        e.target.classList.remove("dragging")
-        e.target.classList.remove("draggedOver")
+        //e.target.classList.remove("dragging")
+        //e.target.classList.remove("draggedOver")
     }
 
     return (
@@ -39,7 +39,7 @@ const Image = ({ img, section, prepareMove }) => {
                 onDragEnd={(e) => dragEnd(e)}
                 onDragEnter={(e) => dragEnter(e)}
                 onDragOver={(e) => dragOver(e)}
-                className={"imgs " + img.classes.join(" ")} id={img.id}
+                className={img.classes.join(" ")} id={img.id}
                 onDragStart={(e) => dragStart(e)}
                 draggable="true" src={img.src} alt="" />
 

@@ -3,7 +3,7 @@ import uuid from "uuid"
 export const newImg = () => ({
     src: "",
     id: uuid.v4(),
-    classes: []
+    classes: ["imgs"]
 })
 
 export const newSection = (name = "New Section", imgs) => ({

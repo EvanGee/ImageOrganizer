@@ -224,19 +224,27 @@ const ACTION_HANDLERS = {
     return state
   },
   [MOVE_IMG]: (state, action) => {
-    state.sections.map((section, i) => {
-      if (section.id === action.section.id) {
 
-        var ind1 = findImgIndex(section, state.dragTo)
-        var ind2 = findImgIndex(section, action.img)
-        var tmp = section.imgs[ind1]
-        section.imgs[ind1] = section.imgs[ind2]
-        section.imgs[ind2] = tmp
 
-        
+    if (action.section.id === state.imgQueue.id) {
+      let section = state.imgQueue
+      let ind1 = findImgIndex(section, state.dragTo)
+      let ind2 = findImgIndex(section, action.img)
+      let tmp = section.imgs[ind1]
+      section.imgs[ind1] = section.imgs[ind2]
+      section.imgs[ind2] = tmp
+    } else {
 
-    }})
-
+      state.sections.map((section, i) => {
+        if (section.id === action.section.id) {
+          let ind1 = findImgIndex(section, state.dragTo)
+          let ind2 = findImgIndex(section, action.img)
+          let tmp = section.imgs[ind1]
+          section.imgs[ind1] = section.imgs[ind2]
+          section.imgs[ind2] = tmp
+        }
+      })
+    }
     return state
   },
   [PREPARE_MOVE]: (state, action) => {
