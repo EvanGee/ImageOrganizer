@@ -23,10 +23,7 @@ const Section = ({ section, addToImgQueue, classname, addImage, prepareMove, add
 
   return (
     <div onDrop={(e) => drop(e)} onDragOver={(e) => allowDrop(e)} className={classname} id={section.id} >
-      <label className="dropButt">
-        <span>Upload Files</span>
-        <input type="file" style={{ display: "none" }} multiple onChange={(e) => addImage(e)} />
-      </label>
+
       <div className="QueueContainer center" >
         {
           section.imgs.map((d, i) => <Image img={d} i={i} key={i} {...{ section, prepareMove }} />)
