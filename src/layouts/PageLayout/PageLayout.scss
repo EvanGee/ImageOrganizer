@@ -1,3 +1,13 @@
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
 .page-layout__viewport {
   padding-top: 4rem;
 }
@@ -5,6 +15,15 @@
 .page-layout__nav-item--active {
   font-weight: bold;
   text-decoration: underline;
+}
+.dragging {
+  //opacity: 0.4 !important;
+}
+
+
+.draggedOver { 
+  opacity: 0.4 !important;
+  cursor: -webkit-grabbing;
 }
 
 .imgs {

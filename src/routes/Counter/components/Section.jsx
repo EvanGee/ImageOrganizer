@@ -17,6 +17,7 @@ const Section = ({
     imgInfo = JSON.parse(imgInfo)
     if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)
+
     } else {
       addToSection(section.id, imgInfo.img)
     }

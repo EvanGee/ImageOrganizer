@@ -66,13 +66,13 @@ export const download = () => {
     var zip = JSZip()
     var state = getState()
     state.imgOrganizer.sections.map((section, i) => {
-      var prefix = i < 10 ? "0" + (i+1) + "-" : (i+1)
+      var prefix = i < 10 ? "0" + (i + 1) + "-" : (i + 1)
       var imageZip = zip.folder(section.name);
       if (section.imgs.length !== 0) {
         section.imgs.map((d, j) => {
           var blob = dataURItoBlob(d.src)
-          var postfix = j < 10  ? "-0" + (j+1)  : "-" + (j+1)
-          var name =  prefix + section.name + postfix + "." + blob.type.split("/")[1] 
+          var postfix = j < 10 ? "-0" + (j + 1) : "-" + (j + 1)
+          var name = prefix + section.name + postfix + "." + blob.type.split("/")[1]
 
           imageZip.file(name, blob, { base64: true });
           console.log("done")
@@ -164,6 +164,17 @@ const removeImg = (state, img) => {
   }
 }
 
+//return index
+const findImgIndex = (section, img) => {
+  var index;
+  section.imgs.map((d, i) => {
+    if (d !== undefined && d.id === img.id) {
+      index = i
+    }
+  })
+  return index
+}
+
 //instert into the specific state array
 const insertImg = (state, key, img, sectionId) => {
 
@@ -215,19 +226,21 @@ const ACTION_HANDLERS = {
   [MOVE_IMG]: (state, action) => {
     state.sections.map((section, i) => {
       if (section.id === action.section.id) {
-        section.imgs.map((img, i) => {
-          if (img.id === state.dragging.id) {
-            removeImg(state, action.img)
-            section.imgs.splice(i, 0, action.img)
-          }
-        })
-      }
-    })
+
+        var ind1 = findImgIndex(section, state.dragTo)
+        var ind2 = findImgIndex(section, action.img)
+        var tmp = section.imgs[ind1]
+        section.imgs[ind1] = section.imgs[ind2]
+        section.imgs[ind2] = tmp
+
+        
+
+    }})
 
     return state
   },
   [PREPARE_MOVE]: (state, action) => {
-    state.dragging = action.imgToDropOn
+    state.dragTo = action.imgToDropOn
     return state
   }
 }
@@ -238,7 +251,7 @@ const ACTION_HANDLERS = {
 const initialState = {
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
-  "dragging": "",
+  "dragTo": "",
 }
 
 const deepCopy = (state) => {
