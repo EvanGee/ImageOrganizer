@@ -33,8 +33,8 @@ const Section = ({
 
   return (
     <div onDrop={(e) => drop(e)} onDragOver={(e) => allowDrop(e)} className={classname} id={section.id} >
-      <div className="sectionNames" >
-        <input type="text" name="name" value={section.name} onChange={updateSecName} />
+      <div className="sectionNameContainer" >
+        <input type="text" name="name" value={section.name} onChange={updateSecName} className="sectionName"/>
       </div>
       {
         section.imgs.map((d, i) => <Image img={d} i={i} key={i} {...{ section, prepareMove }} />)
