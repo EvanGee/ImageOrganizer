@@ -8,7 +8,8 @@ const Section = ({
   classname,
   updateName,
   moveImg,
-  prepareMove
+  prepareMove,
+  deleteSection
 }) => {
 
   const drop = (e) => {
@@ -31,11 +32,18 @@ const Section = ({
     updateName(section.id, e.target.value)
   }
 
+  const deleteSec = () => {
+    if (section.imgs.length > 0){
+      console.log("do you want to delete images too??")
+    }
+    deleteSection(section)
+  }
+
   return (
     <div onDrop={(e) => drop(e)} onDragOver={(e) => allowDrop(e)} className={classname} id={section.id} >
       <div className="sectionNameContainer" >
         <input type="text" name="name" value={section.name} onChange={updateSecName} className="sectionName"/>
-        <span className="fa fa-times fa-2x closeX" aria-hidden="true" />
+        <span className="fa fa-times fa-2x closeX" onClick={()=> deleteSec()} aria-hidden="true" />
       </div>
       {
         section.imgs.map((d, i) => <Image img={d} i={i} key={i} {...{ section, prepareMove }} />)

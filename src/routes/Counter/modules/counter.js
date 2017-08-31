@@ -17,6 +17,7 @@ export const UPDATE_NAME = "UPDATE_NAME"
 export const DOWNLOAD = "DOWNLOAD"
 export const MOVE_IMG = "MOVE_IMG"
 export const PREPARE_MOVE = "PREPARE_MOVE"
+export const DELETE_SECTION = "DELETE_SECTION"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -57,7 +58,20 @@ export const prepare_move = (imgToDropOn) => ({
 export const addToSection = (sectionId, Img) => {
   return (dispatch, getState) => {
     dispatch(sectionAddImage(sectionId, Img))
+  }
+}
 
+export const deleteSection = (section) => {
+  
+  return (dispatch, getState) => {
+    section.imgs.map((d, i) => {
+      dispatch(addImageAction(d))
+    })
+
+  dispatch({
+    type: DELETE_SECTION,
+    section
+  })
   }
 }
 
@@ -192,6 +206,16 @@ const insertImg = (state, key, img, sectionId) => {
 }
 
 
+const findSectionIndex = (state, section) => {
+  var index = 0
+  state.sections.map((d, i) => {
+    if (d.id === section.id)
+      index = i
+  })
+  return index
+}
+
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -247,6 +271,11 @@ const ACTION_HANDLERS = {
   },
   [PREPARE_MOVE]: (state, action) => {
     state.dragTo = action.imgToDropOn
+    return state
+  },
+  [DELETE_SECTION]: (state, action) => {
+    var ind = findSectionIndex(state, action.section)
+    state.sections.splice(ind, 1)
     return state
   }
 }

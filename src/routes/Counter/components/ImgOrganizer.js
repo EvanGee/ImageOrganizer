@@ -17,8 +17,10 @@ export const imgOrganizer = (props = {
   updateName,
   download,
   moveImg,
-  prepareMove
+  prepareMove,
+  deleteSection
 }) => {
+
 
   return (
     <div >

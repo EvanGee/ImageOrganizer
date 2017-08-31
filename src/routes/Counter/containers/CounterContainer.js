@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { addImage, addSection, addToSection, addToImgQueue,
-        updateName, download, move_img, prepare_move } from '../modules/counter'
+        updateName, download, move_img, prepare_move, deleteSection } from '../modules/counter'
 
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -22,7 +22,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateName: (sectionId, name) => dispatch(updateName(sectionId, name)),
   download: () => dispatch(download()),
   moveImg: (section, img) => dispatch(move_img(section, img)),
-  prepareMove: (imgToDropOn) => dispatch(prepare_move(imgToDropOn))
+  prepareMove: (imgToDropOn) => dispatch(prepare_move(imgToDropOn)),
+  deleteSection: (section) => dispatch(deleteSection(section))
 })
 
 const mapStateToProps = (state) => ({
