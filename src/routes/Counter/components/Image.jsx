@@ -32,7 +32,7 @@ const Image = ({ img, section, prepareMove }) => {
     }
 
     return (
-        <div className="imgs">
+        <div className="imgContainer">
 
             <img
                 onDragLeave={(e) => dragLeave(e)}

@@ -28,7 +28,7 @@ export const imgOrganizer = (props = {
           <input type="file" style={{ display: "none" }} className="inputBtn" multiple onChange={(e) => props.addImage(e)} />
         </label>
         <span className="col-xs-6 col-sm-2 col-md-2 col-lg-2 hand btn" aria-hidden="true" onClick={props.download}>Export</span>
-        <span className="col-xs-0 col-sm-5 col-md-5 col-lg-5" /> 
+        <span className="col-xs-0 col-sm-4 col-md-5 col-lg-5" /> 
         <span className="col-xs-12 col-sm-2 col-md-2 col-lg-2 name">Your name here</span>
       </div>
 
