@@ -6,7 +6,7 @@ const Image = ({ img, section, prepareMove }) => {
 
 
     const dragStart = (e) => {
-        e.dataTransfer.setData("text", JSON.stringify({ img, section }))
+        e.dataTransfer.setData("text", JSON.stringify({ imgId: img.id, sectionId: section.id }))
         //var dragImg = document.createElement('img');
         //dragImg.src = img.src
         //e.dataTransfer.setDragImage(dragImg, 0, 0);

@@ -32,6 +32,14 @@ const addSectionAction = (newSection) => ({
   payload: newSection
 })
 
+
+export const addToSection = (sectionId, imgId) => ({
+  type: ADD_IMG_TO_SECTION,
+  imgId,
+  sectionId
+})
+
+
 export const addToImgQueue = (sectionId, img) => ({
   type: ADD_IMG_TO_IMGQUEUE,
   payload: img,
@@ -46,13 +54,6 @@ export const move_img = (section, img) => ({
 export const prepare_move = (imgToDropOn) => ({
   type: PREPARE_MOVE,
   imgToDropOn
-})
-
-
-export const addToSection = (sectionId, img) => ({
-  type: ADD_IMG_TO_SECTION,
-  img,
-  sectionId: sectionId
 })
 
 export const deleteSection = (section) => {
@@ -152,39 +153,38 @@ export const addSection = () => {
   }
 }
 
-const removeImg = (state, img) => {
+const removeImg = (state, imgId) => {
 
   for (var [key, value] of Object.entries(state)) {
-
     if (key === "imgQueue") {
-      state.imgQueue.imgs.find((d, i) => {
-        if (d !== undefined && d.id === img.id) {
-          state.imgQueue.imgs.splice(i, 1)
-        }
-      })
+      let ind = findImgIndex(state.imgQueue, imgId)
+      
+      if( !isNaN(ind) ) {
+        state.imgQueue.imgs.splice(ind, 1)
+      }
     }
 
     else if (key === "sections") {
       state.sections.map((section, i) => {
-        section.imgs.find((d, i) => {
-          if (d !== undefined && d.id === img.id) {
-            section.imgs.splice(i, 1)
-          }
-        })
+        let ind = findImgIndex(section, imgId)
+        if( ind ) {
+          state.sections[i].imgs.splice(ind, 1)
+        }
       })
     }
   }
+
 }
 
 //return index
-const findImgIndex = (section, img) => {
+const findImgIndex = (section, imgId) => {
   var index;
   section.imgs.map((d, i) => {
-    if (d !== undefined && d.id === img.id) {
+    if (d !== undefined && d.id === imgId) {
       index = i
     }
   })
-  return index
+  return index !== undefined ? index : false
 }
 
 //instert into the specific state array
@@ -229,8 +229,8 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
-    removeImg(state, action.img)
-    insertImg(state.sections, "sections", action.img, action.sectionId)
+    removeImg(state, action.ImgId)
+    //insertImg(state.sections, "sections", action.payload, action.sectionId)
     return state
   },
   [ADD_IMG_TO_IMGQUEUE]: (state, action) => {
