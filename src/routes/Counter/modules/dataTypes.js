@@ -2,6 +2,7 @@ import uuid from "uuid"
 
 export const newImg = () => ({
     src: "",
+    blob: '',
     id: uuid.v4(),
     classes: ["imgs"]
 })

@@ -24,18 +24,12 @@ export const DELETE_SECTION = "DELETE_SECTION"
 
 const addImageAction = (newImg) => ({
   type: ADD_IMAGE,
-  payload: newImg
+  img: newImg
 })
 
 const addSectionAction = (newSection) => ({
   type: ADD_SECTION,
   payload: newSection
-})
-
-const sectionAddImage = (sectionId, img) => ({
-  type: ADD_IMG_TO_SECTION,
-  payload: img,
-  sectionId: sectionId
 })
 
 export const addToImgQueue = (sectionId, img) => ({
@@ -55,23 +49,23 @@ export const prepare_move = (imgToDropOn) => ({
 })
 
 
-export const addToSection = (sectionId, Img) => {
-  return (dispatch, getState) => {
-    dispatch(sectionAddImage(sectionId, Img))
-  }
-}
+export const addToSection = (sectionId, img) => ({
+  type: ADD_IMG_TO_SECTION,
+  img,
+  sectionId: sectionId
+})
 
 export const deleteSection = (section) => {
-  
+
   return (dispatch, getState) => {
     section.imgs.map((d, i) => {
       dispatch(addImageAction(d))
     })
 
-  dispatch({
-    type: DELETE_SECTION,
-    section
-  })
+    dispatch({
+      type: DELETE_SECTION,
+      section
+    })
   }
 }
 
@@ -81,13 +75,12 @@ export const download = () => {
     var state = getState()
     state.imgOrganizer.sections.map((section, i) => {
       var prefix = i < 10 ? "0" + (i + 1) + "-" : (i + 1)
-      //var imageZip = zip.folder(section.name);
       if (section.imgs.length !== 0) {
         section.imgs.map((d, j) => {
-          var blob = dataURItoBlob(d.src)
+          var blob = d.blob
           var postfix = j < 10 ? "-0" + (j + 1) : "-" + (j + 1)
           var name = prefix + section.name + postfix + "." + blob.type.split("/")[1]
-          zip.file(name, blob, { base64: true });
+          zip.file(blob, name, {base64: true});
         })
       }
     })
@@ -96,7 +89,9 @@ export const download = () => {
       .then(function (content) {
         saveAs(content, "Images.zip");
       });
+      
   }
+  
 }
 
 //Special thanks to mal hasaranga perera for the binary.charCode idea
@@ -131,15 +126,20 @@ export const addImage = (evt) => {
       if (!file.type.match('image.*'))
         throw new Error("Wrong file type")
 
-      var reader = new FileReader()
+      var reader = new FileReader();
 
-      reader.onload = (e) => {
+      reader.onloadend = (e) => {
         const img = newImg()
-        img.src = e.target.result
+        var blob = new Blob([e.target.result], { type: file.type });
+        var url = URL.createObjectURL(blob);
+        img.src = url
+        img.blob = blob
         dispatch(addImageAction(img))
-      }
 
-      reader.readAsDataURL(file);
+      };
+
+      reader.readAsArrayBuffer(file);
+
 
     }
   }
@@ -221,7 +221,7 @@ const findSectionIndex = (state, section) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [ADD_IMAGE]: (state, action) => {
-    state.imgQueue.imgs.push(action.payload)
+    state.imgQueue.imgs.push(action.img)
     return state
   },
   [ADD_SECTION]: (state, action) => {
@@ -229,8 +229,8 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
-    removeImg(state, action.payload)
-    insertImg(state.sections, "sections", action.payload, action.sectionId)
+    removeImg(state, action.img)
+    insertImg(state.sections, "sections", action.img, action.sectionId)
     return state
   },
   [ADD_IMG_TO_IMGQUEUE]: (state, action) => {

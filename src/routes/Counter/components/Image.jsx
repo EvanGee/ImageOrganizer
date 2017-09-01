@@ -11,7 +11,6 @@ const Image = ({ img, section, prepareMove }) => {
         //dragImg.src = img.src
         //e.dataTransfer.setDragImage(dragImg, 0, 0);
         //e.target.classList.add("dragging")
-
     }
 
     const dragOver = (e) => {
