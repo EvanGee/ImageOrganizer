@@ -16,8 +16,10 @@ const Section = ({
     e.preventDefault();
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
+
     if (imgInfo.sectionId === section.id) {
       //moveImg(imgInfo.section, imgInfo.imgId)
+
 
     } else {
       addToSection(section.id, imgInfo.imgId)
