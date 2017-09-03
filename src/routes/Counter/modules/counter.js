@@ -158,12 +158,11 @@ export const addSection = () => {
   }
 }
 
-const removeImg = (state, imgId) => {
+const removeImg = (state, img) => {
 
   for (var [key, value] of Object.entries(state)) {
     if (key === "imgQueue") {
-      let ind = findImgIndex(state.imgQueue, imgId)
-      
+      let ind = findImgIndex(state.imgQueue, img)
       if( ind > -1 ) {
         state.imgQueue.imgs.splice(ind, 1)
       }
@@ -171,7 +170,7 @@ const removeImg = (state, imgId) => {
 
     else if (key === "sections") {
       state.sections.map((section, i) => {
-        let ind = findImgIndex(section, imgId)
+        let ind = findImgIndex(section, img)
         if( ind > -1) {
           state.sections[i].imgs.splice(ind, 1)
         }
@@ -182,14 +181,14 @@ const removeImg = (state, imgId) => {
 }
 
 //return index
-const findImgIndex = (section, imgId) => {
-  var index;
+const findImgIndex = (section, img) => {
+  var index = -1
   section.imgs.map((d, i) => {
-    if (d !== undefined && d.id === imgId) {
+    if (d !== undefined && d.id === img.id) {
       index = i
     }
   })
-  return index !== undefined ? index : -1
+  return index
 }
 
 //instert into the specific state array
@@ -238,12 +237,12 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
-    removeImg(state, action.img.id)
+    removeImg(state, action.img)
     insertImg(state.sections, "sections", action.img, action.section.id)
     return state
   },
   [ADD_IMG_TO_IMGQUEUE]: (state, action) => {
-    removeImg(state, action.img.id)
+    removeImg(state, action.img)
     insertImg(state.imgQueue, "imgQueue", action.img, null)
     return state
   },
@@ -263,13 +262,16 @@ const ACTION_HANDLERS = {
       section.imgs[ind1] = section.imgs[ind2]
       section.imgs[ind2] = tmp
     } else {
+      
       state.sections.map((section, i) => {
         if (section.id === action.section.id) {
           let ind1 = findImgIndex(section, state.dragTo)
           let ind2 = findImgIndex(section, action.img)
           let tmp = section.imgs[ind1]
+
           section.imgs[ind1] = section.imgs[ind2]
           section.imgs[ind2] = tmp
+ 
         }
       })
     }
