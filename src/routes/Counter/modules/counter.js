@@ -137,10 +137,10 @@ export const addImage = (evt) => {
       if (!file.type.match('image.*'))
         throw new Error("Wrong file type")
 
-      var reader = new FileReader();
-
+      var reader =  new FileReader()
+      const img = newImg()
+      img.uploadNum = i
       reader.onloadend = (e) => {
-        const img = newImg()
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
         img.src = url
@@ -153,6 +153,7 @@ export const addImage = (evt) => {
     }
   }
 }
+
 
 export const addSection = () => {
   return (dispatch, getState) => {
@@ -223,6 +224,7 @@ const findSectionIndex = (state, section) => {
 }
 
 
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -233,6 +235,7 @@ const ACTION_HANDLERS = {
   },
   [ADD_IMAGE]: (state, action) => {
     state.imgQueue.imgs.push(action.img)
+    state.imgQueue.imgs.sort((imgA, imgB)=>imgA.uploadNum - imgB.uploadNum)
     return state
   },
   [ADD_SECTION]: (state, action) => {
