@@ -31,19 +31,28 @@
   cursor: -webkit-grabbing;
 }
 
-.imgContainer{
+.imgs {
   cursor: grab;
-  max-width: 150px;
-  max-height: 150px;
   float:left;
   margin: 5px;
   overflow: hidden;
-}
-.imgs {
-  max-width: 100%;
-  max-height: 100%;
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  width: 100%;
+  max-width: 150px;
+  height: 100%;
+  max-height: 150px;
+  min-height: 120px;
 }
 
+.sectionImg{
+
+}
+
+.imgQueueImg{
+  max-width: 95%;
+  margin: 2.5%
+}
 
 .sections {
   min-height: 200px;
@@ -101,5 +110,4 @@
 }
 
 .inputBtn {
-
 }

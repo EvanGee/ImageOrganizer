@@ -26,7 +26,9 @@ const Section = ({ section, addToImgQueue, classname, addImage, prepareMove, add
 
       <div className="QueueContainer center" >
         {
-          section.imgs.map((d, i) => <Image img={d} i={i} key={i} {...{ section, prepareMove }} />)
+          section.imgs.map((d, i) => {
+            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove }} />}
+            )
         }
       </div>
     </div>

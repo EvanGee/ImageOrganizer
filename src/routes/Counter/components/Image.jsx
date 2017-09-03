@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-const Image = ({ img, section, prepareMove }) => {
+const Image = ({ img, section, prepareMove, extraClass }) => {
 
 
     const dragStart = (e) => {
@@ -30,17 +30,19 @@ const Image = ({ img, section, prepareMove }) => {
         //e.target.classList.remove("draggedOver")
     }
 
+    
     return (
-        <div className="imgContainer">
-
-            <img
+        <div
                 onDragLeave={(e) => dragLeave(e)}
                 onDragEnd={(e) => dragEnd(e)}
                 onDragEnter={(e) => dragEnter(e)}
                 onDragOver={(e) => dragOver(e)}
-                className={img.classes.join(" ")} id={img.id}
+                className={img.classes.join(" ") + " " + extraClass} 
                 onDragStart={(e) => dragStart(e)}
-                draggable="true" src={img.src} alt="" />
+                draggable="true" 
+                style={{backgroundImage: `url(${img.src})`}} 
+                alt="" 
+                id={img.id}>
 
         </div>
     )
