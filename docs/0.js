@@ -33587,15 +33587,18 @@ var addImage = function addImage(evt) {
   return function (dispatch, getState) {
 
     var imageFiles = evt.target.files;
-    for (var i = 0; i < imageFiles.length; i++) {
-      var file = imageFiles[i];
+
+    var _loop = function _loop() {
+      file = imageFiles[i];
+
 
       if (!file.type.match('image.*')) throw new Error("Wrong file type");
 
-      var reader = new FileReader();
+      reader = new FileReader();
 
+      var img = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["a" /* newImg */])();
+      img.uploadNum = i;
       reader.onloadend = function (e) {
-        var img = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["a" /* newImg */])();
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
         img.src = url;
@@ -33604,6 +33607,13 @@ var addImage = function addImage(evt) {
       };
 
       reader.readAsArrayBuffer(file);
+    };
+
+    for (var i = 0; i < imageFiles.length; i++) {
+      var file;
+      var reader;
+
+      _loop();
     }
   };
 };
@@ -33702,6 +33712,9 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, ADD_IMAGE, function (state, action) {
   state.imgQueue.imgs.push(action.img);
+  state.imgQueue.imgs.sort(function (imgA, imgB) {
+    return imgA.uploadNum - imgB.uploadNum;
+  });
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, ADD_SECTION, function (state, action) {
   sections: state.sections.push(action.payload);
@@ -33795,7 +33808,8 @@ var newImg = function newImg() {
     return {
         src: "",
         id: __WEBPACK_IMPORTED_MODULE_1_uuid___default.a.v4(),
-        classes: ["imgs"]
+        classes: ["imgs"],
+        uploadNum: -1
     };
 };
 
@@ -33806,6 +33820,7 @@ var newSection = function newSection() {
         name: name,
         id: __WEBPACK_IMPORTED_MODULE_1_uuid___default.a.v4(),
         imgs: [].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(imgs))
+
     };
 };
 
