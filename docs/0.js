@@ -33553,11 +33553,11 @@ var download = function download() {
     var zip = __WEBPACK_IMPORTED_MODULE_4_jszip___default()();
     var state = getState();
     state.imgOrganizer.sections.map(function (section, i) {
-      var prefix = i < 10 ? "0" + (i + 1) + "-" : i + 1;
+      var prefix = i < 11 ? "0" + (i + 1) + "-" : i + 1;
       if (section.imgs.length !== 0) {
         section.imgs.map(function (d, j) {
           var blob = state.imgOrganizer.blobs[d.src];
-          var postfix = j < 10 ? "-0" + (j + 1) : "-" + (j + 1);
+          var postfix = j < 11 ? "-0" + (j + 1) : "-" + (j + 1);
           var name = prefix + section.name + postfix + "." + blob.type.split("/")[1];
           zip.file(name, blob);
         });
