@@ -11,7 +11,7 @@ const Section = ({ section, addToImgQueue, classname, addImage, prepareMove, add
       moveImg(imgInfo.section, imgInfo.img)
 
     } else {
-      addToImgQueue(section.id, imgInfo.img)
+      addToImgQueue(section, imgInfo.img)
     }
 
   }

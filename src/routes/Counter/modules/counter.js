@@ -18,9 +18,16 @@ export const DOWNLOAD = "DOWNLOAD"
 export const MOVE_IMG = "MOVE_IMG"
 export const PREPARE_MOVE = "PREPARE_MOVE"
 export const DELETE_SECTION = "DELETE_SECTION"
+const ADD_TO_BLOBS = "ADD_TO_BLOBS"
 // ------------------------------------
 // Actions
 // ------------------------------------
+
+const addToBlobs = (url, blob) => ({
+  type: ADD_TO_BLOBS,
+  url,
+  blob
+})
 
 const addImageAction = (newImg) => ({
   type: ADD_IMAGE,
@@ -33,14 +40,14 @@ const addSectionAction = (newSection) => ({
 })
 
 
-export const addToSection = (sectionId, imgId) => ({
+export const addToSection = (section, img) => ({
   type: ADD_IMG_TO_SECTION,
-  imgId,
-  sectionId
+  img,
+  section
 })
 
 
-export const addToImgQueue = (sectionId, img) => ({
+export const addToImgQueue = (section, img) => ({
   type: ADD_IMG_TO_IMGQUEUE,
   payload: img,
 })
@@ -134,13 +141,11 @@ export const addImage = (evt) => {
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
         img.src = url
-        img.blob = blob
+        dispatch(addToBlobs(url, blob))
         dispatch(addImageAction(img))
-
       };
 
       reader.readAsArrayBuffer(file);
-
 
     }
   }
@@ -159,7 +164,7 @@ const removeImg = (state, imgId) => {
     if (key === "imgQueue") {
       let ind = findImgIndex(state.imgQueue, imgId)
       
-      if( !isNaN(ind) ) {
+      if( ind > -1 ) {
         state.imgQueue.imgs.splice(ind, 1)
       }
     }
@@ -167,7 +172,7 @@ const removeImg = (state, imgId) => {
     else if (key === "sections") {
       state.sections.map((section, i) => {
         let ind = findImgIndex(section, imgId)
-        if( ind ) {
+        if( ind > -1) {
           state.sections[i].imgs.splice(ind, 1)
         }
       })
@@ -184,7 +189,7 @@ const findImgIndex = (section, imgId) => {
       index = i
     }
   })
-  return index !== undefined ? index : false
+  return index !== undefined ? index : -1
 }
 
 //instert into the specific state array
@@ -220,6 +225,10 @@ const findSectionIndex = (state, section) => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  [ADD_TO_BLOBS]: (state, action) => {
+    state.blobs[action.url] = action.blob
+    return state
+  },
   [ADD_IMAGE]: (state, action) => {
     state.imgQueue.imgs.push(action.img)
     return state
@@ -229,13 +238,13 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_IMG_TO_SECTION]: (state, action) => {
-    removeImg(state, action.ImgId)
-    //insertImg(state.sections, "sections", action.payload, action.sectionId)
+    removeImg(state, action.img.id)
+    insertImg(state.sections, "sections", action.img, action.section.id)
     return state
   },
   [ADD_IMG_TO_IMGQUEUE]: (state, action) => {
-    removeImg(state, action.payload)
-    insertImg(state.imgQueue, "imgQueue", action.payload, null)
+    removeImg(state, action.img.id)
+    insertImg(state.imgQueue, "imgQueue", action.img, null)
     return state
   },
   [UPDATE_NAME]: (state, action) => {
@@ -246,8 +255,6 @@ const ACTION_HANDLERS = {
     return state
   },
   [MOVE_IMG]: (state, action) => {
-
-
     if (action.section.id === state.imgQueue.id) {
       let section = state.imgQueue
       let ind1 = findImgIndex(section, state.dragTo)
@@ -256,7 +263,6 @@ const ACTION_HANDLERS = {
       section.imgs[ind1] = section.imgs[ind2]
       section.imgs[ind2] = tmp
     } else {
-
       state.sections.map((section, i) => {
         if (section.id === action.section.id) {
           let ind1 = findImgIndex(section, state.dragTo)
@@ -284,13 +290,17 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
+  "blobs": {},
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
   "dragTo": "",
 }
 
 const deepCopy = (state) => {
-  return JSON.parse(JSON.stringify(state));
+  var newState = JSON.parse(JSON.stringify(state));
+  //dont deep copy blobs.
+  newState.blobs = state.blobs
+  return newState
 }
 
 export default function Reducer(state = initialState, action) {

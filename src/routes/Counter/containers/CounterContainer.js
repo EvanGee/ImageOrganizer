@@ -17,8 +17,8 @@ import page from '../components/ImgOrganizer'
 const mapDispatchToProps = (dispatch) => ({
   addImage : (e) => dispatch(addImage(e)),
   addSection : () => dispatch(addSection()),
-  addToImgQueue   : (sectionId, img) => dispatch(addToImgQueue(sectionId, img)),
-  addToSection : (sectionId, ImgId) => dispatch(addToSection(sectionId, ImgId)),
+  addToImgQueue   : (section, img) => dispatch(addToImgQueue(section, img)),
+  addToSection : (section, Img) => dispatch(addToSection(section, Img)),
   updateName: (sectionId, name) => dispatch(updateName(sectionId, name)),
   download: () => dispatch(download()),
   moveImg: (section, img) => dispatch(move_img(section, img)),
