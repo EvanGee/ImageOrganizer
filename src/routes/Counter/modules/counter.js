@@ -49,7 +49,7 @@ export const addToSection = (section, img) => ({
 
 export const addToImgQueue = (section, img) => ({
   type: ADD_IMG_TO_IMGQUEUE,
-  payload: img,
+  img,
 })
 
 export const move_img = (section, img) => ({
@@ -141,7 +141,6 @@ export const addImage = (evt) => {
 
       reader.onloadend = (e) => {
         const img = newImg()
-        console.log(e.target.result)
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
         img.src = url
