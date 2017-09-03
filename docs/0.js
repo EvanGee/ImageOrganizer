@@ -33039,7 +33039,8 @@ module.exports = __webpack_amd_options__;
 var Image = function Image(_ref) {
     var img = _ref.img,
         section = _ref.section,
-        prepareMove = _ref.prepareMove;
+        prepareMove = _ref.prepareMove,
+        extraClass = _ref.extraClass;
 
 
     var dragStart = function dragStart(e) {
@@ -33067,28 +33068,27 @@ var Image = function Image(_ref) {
         //e.target.classList.remove("draggedOver")
     };
 
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "imgContainer" },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", {
-            onDragLeave: function onDragLeave(e) {
-                return dragLeave(e);
-            },
-            onDragEnd: function onDragEnd(e) {
-                return dragEnd(e);
-            },
-            onDragEnter: function onDragEnter(e) {
-                return dragEnter(e);
-            },
-            onDragOver: function onDragOver(e) {
-                return dragOver(e);
-            },
-            className: img.classes.join(" "), id: img.id,
-            onDragStart: function onDragStart(e) {
-                return dragStart(e);
-            },
-            draggable: "true", src: img.src, alt: "" })
-    );
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+        onDragLeave: function onDragLeave(e) {
+            return dragLeave(e);
+        },
+        onDragEnd: function onDragEnd(e) {
+            return dragEnd(e);
+        },
+        onDragEnter: function onDragEnter(e) {
+            return dragEnter(e);
+        },
+        onDragOver: function onDragOver(e) {
+            return dragOver(e);
+        },
+        className: img.classes.join(" ") + " " + extraClass,
+        onDragStart: function onDragStart(e) {
+            return dragStart(e);
+        },
+        draggable: "true",
+        style: { backgroundImage: "url(" + img.src + ")" },
+        alt: "",
+        id: img.id });
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Image);
@@ -33243,7 +33243,7 @@ var Section = function Section(_ref) {
       "div",
       { className: "QueueContainer center" },
       section.imgs.map(function (d, i) {
-        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ img: d, i: i, key: i }, { section: section, prepareMove: prepareMove }));
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ img: d, extraClass: "imgQueueImg", i: i, key: i }, { section: section, prepareMove: prepareMove }));
       })
     )
   );
@@ -33322,7 +33322,7 @@ var Section = function Section(_ref) {
         }, 'aria-hidden': 'true' })
     ),
     section.imgs.map(function (d, i) {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ img: d, i: i, key: i }, { section: section, prepareMove: prepareMove }));
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ extraClass: 'sectionImg', img: d, i: i, key: i }, { section: section, prepareMove: prepareMove }));
     })
   );
 };
