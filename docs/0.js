@@ -33507,7 +33507,7 @@ var addToSection = function addToSection(section, img) {
 var addToImgQueue = function addToImgQueue(section, img) {
   return {
     type: ADD_IMG_TO_IMGQUEUE,
-    payload: img
+    img: img
   };
 };
 
@@ -33596,7 +33596,6 @@ var addImage = function addImage(evt) {
 
       reader.onloadend = function (e) {
         var img = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["a" /* newImg */])();
-        console.log(e.target.result);
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
         img.src = url;
