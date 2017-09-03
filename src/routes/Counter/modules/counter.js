@@ -63,6 +63,16 @@ export const prepare_move = (imgToDropOn) => ({
   imgToDropOn
 })
 
+
+
+export const updateName = (sectionId, name) => ({
+  type: UPDATE_NAME,
+  payload: name,
+  sectionId
+})
+
+
+
 export const deleteSection = (section) => {
 
   return (dispatch, getState) => {
@@ -85,10 +95,10 @@ export const download = () => {
       var prefix = i < 10 ? "0" + (i + 1) + "-" : (i + 1)
       if (section.imgs.length !== 0) {
         section.imgs.map((d, j) => {
-          var blob = d.blob
+          var blob = state.imgOrganizer.blobs[d.src]
           var postfix = j < 10 ? "-0" + (j + 1) : "-" + (j + 1)
           var name = prefix + section.name + postfix + "." + blob.type.split("/")[1]
-          zip.file(blob, name, {base64: true});
+          zip.file(name, blob);
         })
       }
     })
@@ -116,13 +126,6 @@ function dataURItoBlob(dataURI) {
 
 
 
-export const updateName = (sectionId, name) => ({
-  type: UPDATE_NAME,
-  payload: name,
-  sectionId
-})
-
-
 export const addImage = (evt) => {
 
   return (dispatch, getState) => {
@@ -138,6 +141,7 @@ export const addImage = (evt) => {
 
       reader.onloadend = (e) => {
         const img = newImg()
+        console.log(e.target.result)
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
         img.src = url
