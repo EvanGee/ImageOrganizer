@@ -40,7 +40,7 @@ export const imgOrganizer = (props = {
         </div>
         <div className="col-9">
           {
-            props.sections.map((section, i) => <Section key={i} section={section} classname={"sections"}  {...props} />)
+            props.sections.map((section, i) => <Section key={i} section={section} classnames={["sections"]}  {...props} />)
           } 
           <span onClick={() => props.addSection()} className="sectionAddButt fa fa-plus-circle fa-3x hand"  aria-hidden="true"></span>
         </div>

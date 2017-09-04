@@ -5,7 +5,7 @@ import DragSortableList from 'react-drag-sortable'
 const Section = ({
   section,
   addToSection,
-  classname,
+  classnames,
   updateName,
   moveImg,
   prepareMove,
@@ -19,7 +19,7 @@ const Section = ({
 
     if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)
-  
+
     } else {
       addToSection(section, imgInfo.img)
     }
@@ -27,6 +27,7 @@ const Section = ({
 
   const allowDrop = (e) => {
     e.preventDefault();
+
   }
 
   const updateSecName = (e) => {
@@ -34,17 +35,30 @@ const Section = ({
   }
 
   const deleteSec = () => {
-    if (section.imgs.length > 0){
+    if (section.imgs.length > 0) {
       console.log("do you want to delete images too??")
     }
     deleteSection(section)
   }
 
+  const onDragEnter = (e) => {
+    section
+  }
+
+  const onDragExit = (e) => {
+    e.target.classList.toggle("shadow");
+  }
   return (
-    <div onDrop={(e) => drop(e)} onDragOver={(e) => allowDrop(e)} className={classname} id={section.id} >
+    <div
+      onDrop={e => drop(e)}
+      onDragOver={e => allowDrop(e)}
+      onDragEnter={e => onDragEnter(e)}
+      onDragExit={e => onDragExit(e)}
+      className={classnames}
+      id={section.id} >
       <div className="sectionNameContainer" >
-        <input type="text" name="name" value={section.name} onChange={updateSecName} className="sectionName"/>
-        <span className="fa fa-times fa-2x closeX" onClick={()=> deleteSec()} aria-hidden="true" />
+        <input type="text" name="name" value={section.name} onChange={updateSecName} className="sectionName" />
+        <span className="fa fa-times fa-2x closeX" onClick={() => deleteSec()} aria-hidden="true" />
       </div>
       {
         section.imgs.map((d, i) => <Image extraClass="sectionImg" img={d} i={i} key={i} {...{ section, prepareMove }} />)

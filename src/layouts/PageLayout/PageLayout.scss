@@ -34,7 +34,6 @@
 .imgs {
   cursor: grab;
   float:left;
-  margin: 5px;
   overflow: hidden;
   background-size: 100% 100%;
   background-repeat:no-repeat;
@@ -46,21 +45,43 @@
 }
 
 .sectionImg{
-
-}
-
-.imgQueueImg{
-  max-width: 95%;
-  margin: 2.5%
+  margin-left: 2.5%;
+  margin-top: 2.5%;
 }
 
 .sections {
+  padding-right: 2.5%;
+  padding-bottom: 2.5%; 
   min-height: 200px;
   border: solid black 1px;
   overflow:hidden;
   box-shadow: 3px 3px 3px #888888;
   margin-bottom: 7px;
+  
+
+  &:hover{
+    box-shadow: 6px 6px 6px #888888;
+  }
 }
+
+.shadow{
+  box-shadow: 6px 6px 6px #888888;
+}
+
+.imgQueue {
+  height: 100%;
+  border: solid black 1px;
+  padding-top: 2.5%;
+}
+
+.imgQueueImg{
+  max-width: 95%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-bottom: 2.5%;
+  margin-top: 0%;
+}
+
 
 .sectionName{
   float: left;
@@ -102,12 +123,11 @@
   line-height: 40px; 
   margin-left: 15px;
 
+  &:hover{
+    box-shadow: 6px 6px 6px #888888;
+  }
 }
 
-.imgQueue {
-  height: 100%;
-  border: solid black 1px;
-}
 
 .inputBtn {
 }
