@@ -22,7 +22,7 @@ const Image = ({ img, section, prepareMove, extraClass }) => {
     }
 
     const dragLeave = (e) => {
-       // e.target.classList.remove("draggedOver")
+        // e.target.classList.remove("draggedOver")
     }
 
     const dragEnd = (e) => {
@@ -30,19 +30,29 @@ const Image = ({ img, section, prepareMove, extraClass }) => {
         //e.target.classList.remove("draggedOver")
     }
 
-    
+    const onMouseDown = e => {
+        if (e.shiftKey) {
+            alert("The SHIFT key was pressed!");
+        } else {
+            alert("The SHIFT key was NOT pressed!");
+        }
+    }
+
+
+
     return (
         <div
-                onDragLeave={(e) => dragLeave(e)}
-                onDragEnd={(e) => dragEnd(e)}
-                onDragEnter={(e) => dragEnter(e)}
-                onDragOver={(e) => dragOver(e)}
-                className={img.classes.join(" ") + " " + extraClass} 
-                onDragStart={(e) => dragStart(e)}
-                draggable="true" 
-                style={{backgroundImage: `url(${img.src})`}} 
-                alt="" 
-                id={img.id}>
+            onDragLeave={e => dragLeave(e)}
+            onDragEnd={e => dragEnd(e)}
+            onDragEnter={e => dragEnter(e)}
+            onDragOver={e => dragOver(e)}
+            className={img.classes.join(" ") + " " + extraClass}
+            onDragStart={e => dragStart(e)}
+            onMouseDown={e=> onMouseDown(e)}
+            draggable="true"
+            style={{ backgroundImage: `url(${img.src})` }}
+            alt=""
+            id={img.id}>
 
         </div>
     )

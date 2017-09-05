@@ -42,19 +42,20 @@ const Section = ({
   }
 
   const onDragEnter = (e) => {
-    section
+    
   }
 
   const onDragExit = (e) => {
-    e.target.classList.toggle("shadow");
   }
+
+
   return (
     <div
       onDrop={e => drop(e)}
       onDragOver={e => allowDrop(e)}
       onDragEnter={e => onDragEnter(e)}
       onDragExit={e => onDragExit(e)}
-      className={classnames}
+      className={classnames.join(" ")}
       id={section.id} >
       <div className="sectionNameContainer" >
         <input type="text" name="name" value={section.name} onChange={updateSecName} className="sectionName" />
