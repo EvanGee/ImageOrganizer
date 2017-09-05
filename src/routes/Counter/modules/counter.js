@@ -112,9 +112,9 @@ export const download = () => {
       .then(function (content) {
         saveAs(content, "Images.zip");
       });
-      
+
   }
-  
+
 }
 
 //Special thanks to mal hasaranga perera for the binary.charCode idea
@@ -134,7 +134,7 @@ function dataURItoBlob(dataURI) {
 export const addImage = (evt) => {
 
   return (dispatch, getState) => {
-
+    console.log(getState().imgOrganizer)
     var imageFiles = evt.target.files
     for (var i = 0; i < imageFiles.length; i++) {
       var file = imageFiles[i]
@@ -142,7 +142,7 @@ export const addImage = (evt) => {
       if (!file.type.match('image.*'))
         throw new Error("Wrong file type")
 
-      var reader =  new FileReader()
+      var reader = new FileReader()
       const img = newImg()
       img.uploadNum = i
       reader.onloadend = (e) => {
@@ -172,7 +172,7 @@ const removeImg = (state, img) => {
   for (var [key, value] of Object.entries(state)) {
     if (key === "imgQueue") {
       let ind = findImgIndex(state.imgQueue, img)
-      if( ind > -1 ) {
+      if (ind > -1) {
         state.imgQueue.imgs.splice(ind, 1)
       }
     }
@@ -180,7 +180,7 @@ const removeImg = (state, img) => {
     else if (key === "sections") {
       state.sections.map((section, i) => {
         let ind = findImgIndex(section, img)
-        if( ind > -1) {
+        if (ind > -1) {
           state.sections[i].imgs.splice(ind, 1)
         }
       })
@@ -189,21 +189,21 @@ const removeImg = (state, img) => {
 
 }
 
-const findImgsInState = (state, imgs) => {
-  var imgs = []
+const findImgInState = (state, imgs) => {
   for (var [key, value] of Object.entries(state)) {
     if (key === "imgQueue") {
       let img = findImgInSection(state.imgQueue, img)
-      if( img !== -1 ) {
-        imgs.push(img)
+      if (img !== -1) {
+        console.log(img)
+        return img
       }
     }
 
     else if (key === "sections") {
       state.sections.map((section, i) => {
         let img = findImgInSection(section, img)
-        if( img !== -1 ) {
-          imgs.push(img)
+        if (img !== -1) {
+          return img
         }
       })
     }
@@ -221,13 +221,13 @@ const findImgIndex = (section, img) => {
 }
 
 const findImgInSection = (section, img) => {
-  var img = -1
+  var found = -1
   section.imgs.map((d, i) => {
     if (d !== undefined && d.id === img.id) {
-      index = img
+      found = d
     }
   })
-  return img
+  return found
 }
 
 
@@ -272,7 +272,7 @@ const ACTION_HANDLERS = {
   },
   [ADD_IMAGE]: (state, action) => {
     state.imgQueue.imgs.push(action.img)
-    state.imgQueue.imgs.sort((imgA, imgB)=>imgA.uploadNum - imgB.uploadNum)
+    state.imgQueue.imgs.sort((imgA, imgB) => imgA.uploadNum - imgB.uploadNum)
     return state
   },
   [ADD_SECTION]: (state, action) => {
@@ -305,7 +305,7 @@ const ACTION_HANDLERS = {
       section.imgs[ind1] = section.imgs[ind2]
       section.imgs[ind2] = tmp
     } else {
-      
+
       state.sections.map((section, i) => {
         if (section.id === action.section.id) {
           let ind1 = findImgIndex(section, state.dragTo)
@@ -314,7 +314,7 @@ const ACTION_HANDLERS = {
 
           section.imgs[ind1] = section.imgs[ind2]
           section.imgs[ind2] = tmp
- 
+
         }
       })
     }
@@ -331,16 +331,25 @@ const ACTION_HANDLERS = {
   },
   [HIGH_LIGHTED]: (state, action) => {
 
-    let isThere = false
+    var isThere = false
     state.highLighted.map((d) => {
-      if (d.id === action.img.id)
+      if (d.id === action.img.id) {
         isThere = true
+      }
     })
 
-    if (isThere === false)
-      state.highLighted.push(action.img.id)
-    console.log(state.highLighted)
-    
+    if (isThere === false) {
+      state.highLighted.push(action.img)
+      
+      if (action.section.id === state.imgQueue.id) {
+        let img = findImgInSection(state.imgQueue, action.img)
+        img.classes.push("highLighted")
+      } else {
+        let i = findSectionIndex(state, action.section)
+        let img = findImgInSection(state.sections[i], action.img)
+        img.classes.push("highLighted")
+      }
+    }
     return state
   }
 }
