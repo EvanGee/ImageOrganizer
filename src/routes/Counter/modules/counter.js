@@ -20,6 +20,7 @@ export const PREPARE_MOVE = "PREPARE_MOVE"
 export const DELETE_SECTION = "DELETE_SECTION"
 export const HIGH_LIGHTED = "HIGH_LIGHTED"
 const ADD_TO_BLOBS = "ADD_TO_BLOBS"
+export const MOVE_HIGHLIGHTED = "MOVE_HIGHLIGHTED"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -54,19 +55,21 @@ export const addToImgQueue = (section, img) => ({
 })
 
 export const moveHiglighted = (section) => {
-  console.log("moveHiglighted")
   return (dispatch, getState) => {
     let state = getState().imgOrganizer
 
-    if (section.id === state.imgQueue.id)
+    if (section.id === state.imgQueue.id) {
       state.highLighted.map((d, i) => {
         dispatch(addToImgQueue(section, d))
       })
+    }
     else {
       state.highLighted.map((d, i) => {
         dispatch(addToSection(section, d))
       })
     }
+
+    dispatch({type: MOVE_HIGHLIGHTED})
 
   }
 }
@@ -154,7 +157,6 @@ function dataURItoBlob(dataURI) {
 export const addImage = (evt) => {
 
   return (dispatch, getState) => {
-    console.log(getState().imgOrganizer)
     var imageFiles = evt.target.files
     for (var i = 0; i < imageFiles.length; i++) {
       var file = imageFiles[i]
@@ -214,7 +216,6 @@ const findImgInState = (state, imgs) => {
     if (key === "imgQueue") {
       let img = findImgInSection(state.imgQueue, img)
       if (img !== -1) {
-        console.log(img)
         return img
       }
     }
@@ -372,6 +373,13 @@ const ACTION_HANDLERS = {
     }
     return state
   },
+  [MOVE_HIGHLIGHTED]: (state, action) => {
+    state.highLighted.map(d => {
+      d.classes.pop()
+    })
+    state.highLighted = []
+    return state
+  }
 }
 
 // ------------------------------------

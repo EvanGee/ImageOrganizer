@@ -20,6 +20,7 @@ const Section = ({
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
 
+    console.log(isHighlighted)
     if (isHighlighted){
       moveHiglighted(section)
     }

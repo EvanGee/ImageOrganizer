@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { addImage, addSection, addToSection, addToImgQueue,
         updateName, download, move_img, prepare_move, deleteSection,
-        highLighted } from '../modules/counter'
+        highLighted, moveHiglighted } from '../modules/counter'
 
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   imgQueue : state.imgOrganizer.imgQueue,
   sections : state.imgOrganizer.sections,
-  isHighlighted: state.imgOrganizer.highLighted > 0
+  isHighlighted: (() => state.imgOrganizer.highLighted.length > 0)()
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
