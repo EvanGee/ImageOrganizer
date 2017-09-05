@@ -53,11 +53,31 @@ export const addToImgQueue = (section, img) => ({
   img,
 })
 
+export const moveHiglighted = (section) => {
+  console.log("moveHiglighted")
+  return (dispatch, getState) => {
+    let state = getState().imgOrganizer
+
+    if (section.id === state.imgQueue.id)
+      state.highLighted.map((d, i) => {
+        dispatch(addToImgQueue(section, d))
+      })
+    else {
+      state.highLighted.map((d, i) => {
+        dispatch(addToSection(section, d))
+      })
+    }
+
+  }
+}
+
 export const move_img = (section, img) => ({
   type: MOVE_IMG,
   section,
   img
 })
+
+
 
 export const prepare_move = (imgToDropOn) => ({
   type: PREPARE_MOVE,
@@ -351,7 +371,7 @@ const ACTION_HANDLERS = {
       }
     }
     return state
-  }
+  },
 }
 
 // ------------------------------------

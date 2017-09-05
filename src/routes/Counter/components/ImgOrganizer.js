@@ -19,7 +19,10 @@ export const imgOrganizer = (props = {
   moveImg,
   prepareMove,
   deleteSection,
-  highLighted
+  highLighted,
+  isHighlighted,
+  moveHiglighted,
+  
 }) => {
 
 

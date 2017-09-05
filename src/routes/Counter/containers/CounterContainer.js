@@ -25,12 +25,15 @@ const mapDispatchToProps = (dispatch) => ({
   download: () => dispatch(download()),
   moveImg: (section, img) => dispatch(move_img(section, img)),
   prepareMove: (imgToDropOn) => dispatch(prepare_move(imgToDropOn)),
-  deleteSection: (section) => dispatch(deleteSection(section))
+  deleteSection: (section) => dispatch(deleteSection(section)),
+  moveHiglighted: (section) => dispatch(moveHiglighted(section))
 })
+
 
 const mapStateToProps = (state) => ({
   imgQueue : state.imgOrganizer.imgQueue,
-  sections : state.imgOrganizer.sections
+  sections : state.imgOrganizer.sections,
+  isHighlighted: state.imgOrganizer.highLighted > 0
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

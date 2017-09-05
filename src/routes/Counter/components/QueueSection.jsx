@@ -9,14 +9,22 @@ const Section = ({
   prepareMove, 
   addToSection, 
   moveImg,
-  highLighted
+  highLighted,
+  isHighlighted,
+  moveHiglighted,
+
+  
 }) => {
 
   const drop = (e) => {
     e.preventDefault();
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
-    if (imgInfo.section.id === section.id) {
+
+    if (isHighlighted){
+      moveHiglighted(section)
+    }
+    else if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)
 
     } else {

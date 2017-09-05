@@ -10,6 +10,8 @@ const Section = ({
   moveImg,
   prepareMove,
   deleteSection,
+  isHighlighted,
+  moveHiglighted,
   highLighted
 }) => {
 
@@ -18,7 +20,10 @@ const Section = ({
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
 
-    if (imgInfo.section.id === section.id) {
+    if (isHighlighted){
+      moveHiglighted(section)
+    }
+    else if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)
 
     } else {
