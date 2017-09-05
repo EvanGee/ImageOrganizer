@@ -336,9 +336,8 @@ const ACTION_HANDLERS = {
     //let section = state.sections[findSectionIndex(state, action.section)]
     //console.log(section)
     //let img = findImgInSection(section, action.img)
-    //console.log(img)
-    //state.highLighted.add(img)
-    //console.log(state.highLighted)
+    console.log(state)
+    state.highLighted.push(action.img)
     return state
   }
 }
@@ -351,13 +350,14 @@ const initialState = {
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
   "dragTo": "",
-  "highLighted": new Set()
+  "highLighted": new Set(),
 }
 
 const deepCopy = (state) => {
   var newState = JSON.parse(JSON.stringify(state));
   //dont deep copy blobs.
   newState.blobs = state.blobs
+  newState.highLighted = state.highLighted
   return newState
 }
 

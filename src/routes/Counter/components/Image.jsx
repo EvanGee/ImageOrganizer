@@ -37,7 +37,8 @@ const Image = ({
     }
 
     const onMouseDown = e => {
-        console.log("wassssup")
+        if (e.shiftKey)
+            highLighted(section, img)
     }
 
 
