@@ -31,11 +31,8 @@ const Image = ({ img, section, prepareMove, extraClass }) => {
     }
 
     const onMouseDown = e => {
-        if (e.shiftKey) {
-            alert("The SHIFT key was pressed!");
-        } else {
-            alert("The SHIFT key was NOT pressed!");
-        }
+        if (e.shiftKey)
+            console.log("shift key was pressed")
     }
 
 
