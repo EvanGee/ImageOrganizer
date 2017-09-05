@@ -331,13 +331,16 @@ const ACTION_HANDLERS = {
   },
   [HIGH_LIGHTED]: (state, action) => {
 
-    //state.findImgsInState(state, action.img)
-    console.log(action.section)
-    //let section = state.sections[findSectionIndex(state, action.section)]
-    //console.log(section)
-    //let img = findImgInSection(section, action.img)
-    console.log(state)
-    state.highLighted.push(action.img)
+    let isThere = false
+    state.highLighted.map((d) => {
+      if (d.id === action.img.id)
+        isThere = true
+    })
+
+    if (isThere === false)
+      state.highLighted.push(action.img.id)
+    console.log(state.highLighted)
+    
     return state
   }
 }
@@ -350,7 +353,7 @@ const initialState = {
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
   "dragTo": "",
-  "highLighted": new Set(),
+  "highLighted": [],
 }
 
 const deepCopy = (state) => {
