@@ -18,6 +18,7 @@ export const DOWNLOAD = "DOWNLOAD"
 export const MOVE_IMG = "MOVE_IMG"
 export const PREPARE_MOVE = "PREPARE_MOVE"
 export const DELETE_SECTION = "DELETE_SECTION"
+export const HIGH_LIGHTED = "HIGH_LIGHTED"
 const ADD_TO_BLOBS = "ADD_TO_BLOBS"
 // ------------------------------------
 // Actions
@@ -71,7 +72,11 @@ export const updateName = (sectionId, name) => ({
   sectionId
 })
 
-
+export const highLighted = (section, img) => ({
+  type: HIGH_LIGHTED,
+  section,
+  img
+})
 
 export const deleteSection = (section) => {
 
@@ -92,11 +97,11 @@ export const download = () => {
     var zip = JSZip()
     var state = getState()
     state.imgOrganizer.sections.map((section, i) => {
-      var prefix = i < 11 ? "0" + (i + 1) + "-" : (i + 1)
+      var prefix = i < 9 ? "0" + (i + 1) + "-" : (i + 1)
       if (section.imgs.length !== 0) {
         section.imgs.map((d, j) => {
           var blob = state.imgOrganizer.blobs[d.src]
-          var postfix = j < 11 ? "-0" + (j + 1) : "-" + (j + 1)
+          var postfix = j < 9 ? "-0" + (j + 1) : "-" + (j + 1)
           var name = prefix + section.name + postfix + "." + blob.type.split("/")[1]
           zip.file(name, blob);
         })
@@ -184,7 +189,27 @@ const removeImg = (state, img) => {
 
 }
 
-//return index
+const findImgsInState = (state, imgs) => {
+  var imgs = []
+  for (var [key, value] of Object.entries(state)) {
+    if (key === "imgQueue") {
+      let img = findImgInSection(state.imgQueue, img)
+      if( img !== -1 ) {
+        imgs.push(img)
+      }
+    }
+
+    else if (key === "sections") {
+      state.sections.map((section, i) => {
+        let img = findImgInSection(section, img)
+        if( img !== -1 ) {
+          imgs.push(img)
+        }
+      })
+    }
+  }
+
+}
 const findImgIndex = (section, img) => {
   var index = -1
   section.imgs.map((d, i) => {
@@ -194,6 +219,18 @@ const findImgIndex = (section, img) => {
   })
   return index
 }
+
+const findImgInSection = (section, img) => {
+  var img = -1
+  section.imgs.map((d, i) => {
+    if (d !== undefined && d.id === img.id) {
+      index = img
+    }
+  })
+  return img
+}
+
+
 
 //instert into the specific state array
 const insertImg = (state, key, img, sectionId) => {
@@ -291,6 +328,18 @@ const ACTION_HANDLERS = {
     var ind = findSectionIndex(state, action.section)
     state.sections.splice(ind, 1)
     return state
+  },
+  [HIGH_LIGHTED]: (state, action) => {
+
+    //state.findImgsInState(state, action.img)
+    console.log(action.section)
+    //let section = state.sections[findSectionIndex(state, action.section)]
+    //console.log(section)
+    //let img = findImgInSection(section, action.img)
+    //console.log(img)
+    //state.highLighted.add(img)
+    //console.log(state.highLighted)
+    return state
   }
 }
 
@@ -302,6 +351,7 @@ const initialState = {
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
   "dragTo": "",
+  "highLighted": new Set()
 }
 
 const deepCopy = (state) => {
@@ -313,6 +363,5 @@ const deepCopy = (state) => {
 
 export default function Reducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
-
   return handler ? handler(deepCopy(state), action) : state
 }

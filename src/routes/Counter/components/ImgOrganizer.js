@@ -18,7 +18,8 @@ export const imgOrganizer = (props = {
   download,
   moveImg,
   prepareMove,
-  deleteSection
+  deleteSection,
+  highLighted
 }) => {
 
 

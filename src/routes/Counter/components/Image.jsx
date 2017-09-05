@@ -2,7 +2,13 @@ import React from 'react';
 
 
 
-const Image = ({ img, section, prepareMove, extraClass }) => {
+const Image = ({
+    img,
+    section,
+    prepareMove,
+    extraClass,
+    highLighted,
+    }) => {
 
 
     const dragStart = (e) => {
@@ -32,7 +38,7 @@ const Image = ({ img, section, prepareMove, extraClass }) => {
 
     const onMouseDown = e => {
         if (e.shiftKey)
-            console.log("shift key was pressed")
+            highLighted(section, img)
     }
 
 
@@ -45,7 +51,7 @@ const Image = ({ img, section, prepareMove, extraClass }) => {
             onDragOver={e => dragOver(e)}
             className={img.classes.join(" ") + " " + extraClass}
             onDragStart={e => dragStart(e)}
-            onMouseDown={e=> onMouseDown(e)}
+            onMouseDown={e => onMouseDown(e)}
             draggable="true"
             style={{ backgroundImage: `url(${img.src})` }}
             alt=""

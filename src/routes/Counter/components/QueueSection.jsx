@@ -1,7 +1,16 @@
 import React from 'react';
 import Image from "./Image"
 
-const Section = ({ section, addToImgQueue, classname, addImage, prepareMove, addToSection, moveImg }) => {
+const Section = ({ 
+  section, 
+  addToImgQueue, 
+  classname, 
+  addImage, 
+  prepareMove, 
+  addToSection, 
+  moveImg,
+  highLighted
+}) => {
 
   const drop = (e) => {
     e.preventDefault();
@@ -27,7 +36,7 @@ const Section = ({ section, addToImgQueue, classname, addImage, prepareMove, add
       <div className="QueueContainer center" >
         {
           section.imgs.map((d, i) => {
-            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove }} />}
+            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove, highLighted }} />}
             )
         }
       </div>
