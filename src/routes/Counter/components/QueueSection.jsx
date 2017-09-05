@@ -22,7 +22,7 @@ const Section = ({
     imgInfo = JSON.parse(imgInfo)
 
     if (isHighlighted){
-      moveHiglighted(section)
+      moveHiglighted(section, imgInfo.img)
     }
     else if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)

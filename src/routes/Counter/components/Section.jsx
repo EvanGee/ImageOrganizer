@@ -19,10 +19,9 @@ const Section = ({
     e.preventDefault();
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
-
-    console.log(isHighlighted)
-    if (isHighlighted){
-      moveHiglighted(section)
+  
+    if (isHighlighted) {
+      moveHiglighted(section, imgInfo.img)
     }
     else if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)

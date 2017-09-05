@@ -10,7 +10,6 @@ const Image = ({
     highLighted,
     }) => {
 
-
     const dragStart = (e) => {
         e.dataTransfer.setData("text", JSON.stringify({ img, section }))
         //var dragImg = document.createElement('img');
@@ -21,6 +20,7 @@ const Image = ({
 
     const dragOver = (e) => {
         prepareMove(img)
+
     }
 
     const dragEnter = (e) => {
@@ -37,10 +37,13 @@ const Image = ({
     }
 
     const onMouseDown = e => {
+        highLighted(section, img)
+    }
+
+    const onMouseOver = e => {
         if (e.shiftKey)
             highLighted(section, img)
     }
-
 
 
     return (
@@ -52,6 +55,7 @@ const Image = ({
             className={img.classes.join(" ") + " " + extraClass}
             onDragStart={e => dragStart(e)}
             onMouseDown={e => onMouseDown(e)}
+            onMouseOver={e=>onMouseOver(e)}
             draggable="true"
             style={{ backgroundImage: `url(${img.src})` }}
             alt=""

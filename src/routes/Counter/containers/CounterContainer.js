@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
   moveImg: (section, img) => dispatch(move_img(section, img)),
   prepareMove: (imgToDropOn) => dispatch(prepare_move(imgToDropOn)),
   deleteSection: (section) => dispatch(deleteSection(section)),
-  moveHiglighted: (section) => dispatch(moveHiglighted(section))
+  moveHiglighted: (section, extraImg) => dispatch(moveHiglighted(section, extraImg))
 })
 
 

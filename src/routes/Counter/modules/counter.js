@@ -54,20 +54,32 @@ export const addToImgQueue = (section, img) => ({
   img,
 })
 
-export const moveHiglighted = (section) => {
+export const moveHiglighted = (section, extraImg) => {
+
   return (dispatch, getState) => {
     let state = getState().imgOrganizer
 
     if (section.id === state.imgQueue.id) {
+
+      if (extraImg.id !== undefined) 
+        dispatch(addToImgQueue(section, extraImg))
+
       state.highLighted.map((d, i) => {
         dispatch(addToImgQueue(section, d))
       })
+
     }
     else {
+      if (extraImg.id !== undefined) 
+        dispatch(addToSection(section, extraImg))
+      
       state.highLighted.map((d, i) => {
         dispatch(addToSection(section, d))
       })
+
+
     }
+    
 
     dispatch({type: MOVE_HIGHLIGHTED})
 
