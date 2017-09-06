@@ -504,7 +504,7 @@ module.exports = function (it) {
 /***/ "./node_modules/babel-runtime/node_modules/core-js/library/modules/_core.js":
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.5.0' };
+var core = module.exports = { version: '2.5.1' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -895,23 +895,6 @@ module.exports = function (done, value) {
 /***/ (function(module, exports) {
 
 module.exports = {};
-
-
-/***/ }),
-
-/***/ "./node_modules/babel-runtime/node_modules/core-js/library/modules/_keyof.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-var getKeys = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_object-keys.js");
-var toIObject = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_to-iobject.js");
-module.exports = function (object, el) {
-  var O = toIObject(object);
-  var keys = getKeys(O);
-  var length = keys.length;
-  var index = 0;
-  var key;
-  while (length > index) if (O[key = keys[index++]] === el) return key;
-};
 
 
 /***/ }),
@@ -1591,7 +1574,6 @@ var uid = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js
 var wks = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_wks.js");
 var wksExt = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_wks-ext.js");
 var wksDefine = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_wks-define.js");
-var keyOf = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_keyof.js");
 var enumKeys = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_enum-keys.js");
 var isArray = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_is-array.js");
 var anObject = __webpack_require__("./node_modules/babel-runtime/node_modules/core-js/library/modules/_an-object.js");
@@ -1755,9 +1737,9 @@ $export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
       : SymbolRegistry[key] = $Symbol(key);
   },
   // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(key) {
-    if (isSymbol(key)) return keyOf(SymbolRegistry, key);
-    throw TypeError(key + ' is not a symbol!');
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
   },
   useSetter: function () { setter = true; },
   useSimple: function () { setter = false; }
@@ -1865,7 +1847,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "[draggable]{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;-khtml-user-drag:element;-webkit-user-drag:element}.name{margin-left:20px}.page-layout__viewport{padding-top:4rem}.page-layout__nav-item--active{font-weight:700;text-decoration:underline}.draggedOver{opacity:.4!important;cursor:-webkit-grabbing}.imgs{cursor:-webkit-grab;cursor:grab;float:left;margin:5px;overflow:hidden;background-size:100% 100%;background-repeat:no-repeat;width:100%;max-width:150px;height:100%;max-height:150px;min-height:120px}.imgQueueImg{max-width:95%;margin:2.5%}.sections{min-height:200px;border:1px solid #000;overflow:hidden;box-shadow:3px 3px 3px #888;margin-bottom:7px}.sectionName{float:left;margin:5px;padding-left:10px;border:none}.sectionNameContainer{width:100%;height:40px}.closeX{float:right;margin:3px}.closeX,.hand{cursor:pointer}.row{margin:0;padding:0}.btn{width:100%;height:60px;border:1px solid #000;border-radius:0;box-shadow:3px 3px 3px #888;text-align:center;vertical-align:middle;line-height:40px;margin-left:15px}.imgQueue{height:100%;border:1px solid #000}", ""]);
+exports.push([module.i, "[draggable]{-moz-user-select:none;-webkit-user-select:none;-ms-user-select:none;user-select:none;-khtml-user-drag:element;-webkit-user-drag:element}.name{margin-left:20px}.page-layout__viewport{padding-top:4rem}.page-layout__nav-item--active{font-weight:700;text-decoration:underline}.draggedOver{opacity:.4!important;cursor:-webkit-grabbing}.imgs{cursor:-webkit-grab;cursor:grab;float:left;overflow:hidden;background-size:100% 100%;background-repeat:no-repeat;width:100%;max-width:150px;height:100%;max-height:150px;min-height:120px}.sectionImg{margin-left:2.5%;margin-top:2.5%}.sections{padding-right:2.5%;padding-bottom:2.5%;min-height:200px;border:1px solid #000;overflow:hidden;box-shadow:3px 3px 3px #888;margin-bottom:7px}.sections:hover,.shadow{box-shadow:6px 6px 6px #888}.highLighted{background-color:rgba(2,255,114,.5);background-blend-mode:multiply}.imgQueue{height:100%;border:1px solid #000;padding-top:2.5%}.imgQueueImg{max-width:95%;margin:0 2.5% 2.5%}.sectionName{float:left;margin:5px;padding-left:10px;border:none}.sectionNameContainer{width:100%;height:40px}.closeX{float:right;margin:3px}.closeX,.hand{cursor:pointer}.row{margin:0;padding:0}.btn{width:100%;height:60px;border:1px solid #000;border-radius:0;box-shadow:3px 3px 3px #888;text-align:center;vertical-align:middle;line-height:40px;margin-left:15px}.btn:hover{box-shadow:6px 6px 6px #888}", ""]);
 
 // exports
 

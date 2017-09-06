@@ -43,6 +43,11 @@ const Image = ({
         highLighted(section, img)
     }
 
+    const onMouseUp = e => {
+        setButtonDown("0", 0)
+    }
+
+
     const onMouseOver = e => {
         if (buttonsDown[0] > 0 && e.shiftKey)
             highLighted(section, img)
@@ -59,6 +64,7 @@ const Image = ({
             onDragStart={e => dragStart(e)}
             onMouseDown={e => onMouseDown(e)}
             onMouseOver={e=>onMouseOver(e)}
+            onMouseUp={e=>onMouseUp(e)}
             draggable="true"
             style={{ backgroundImage: `url(${img.src})` }}
             alt=""

@@ -69,8 +69,8 @@
 }
 
 .highLighted{
-  border-style: solid;
-  border-width: 5px;
+    background-color: rgba(2, 255, 114, 0.50); // Tint color
+    background-blend-mode: multiply;
 }
 
 .imgQueue {
