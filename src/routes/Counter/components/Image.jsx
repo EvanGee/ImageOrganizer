@@ -8,6 +8,8 @@ const Image = ({
     prepareMove,
     extraClass,
     highLighted,
+    buttonsDown,
+    setButtonDown
     }) => {
 
     const dragStart = (e) => {
@@ -37,11 +39,12 @@ const Image = ({
     }
 
     const onMouseDown = e => {
+        setButtonDown("0", 1)
         highLighted(section, img)
     }
 
     const onMouseOver = e => {
-        if (e.shiftKey)
+        if (buttonsDown[0] > 0 && e.shiftKey)
             highLighted(section, img)
     }
 

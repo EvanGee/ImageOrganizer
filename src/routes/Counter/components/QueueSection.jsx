@@ -12,7 +12,8 @@ const Section = ({
   highLighted,
   isHighlighted,
   moveHiglighted,
-
+  buttonsDown,
+  setButtonDown
   
 }) => {
 
@@ -44,7 +45,7 @@ const Section = ({
       <div className="QueueContainer center" >
         {
           section.imgs.map((d, i) => {
-            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove, highLighted }} />}
+            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove, highLighted, buttonsDown, setButtonDown }} />}
             )
         }
       </div>

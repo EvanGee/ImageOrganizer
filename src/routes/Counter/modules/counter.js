@@ -21,6 +21,7 @@ export const DELETE_SECTION = "DELETE_SECTION"
 export const HIGH_LIGHTED = "HIGH_LIGHTED"
 const ADD_TO_BLOBS = "ADD_TO_BLOBS"
 export const MOVE_HIGHLIGHTED = "MOVE_HIGHLIGHTED"
+export const SET_BTN_DOWN = "SET_BTN_DOWN"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -58,12 +59,9 @@ export const moveHiglighted = (section, extraImg) => {
 
   return (dispatch, getState) => {
     let state = getState().imgOrganizer
-
     if (section.id === state.imgQueue.id) {
-
       if (extraImg.id !== undefined) 
         dispatch(addToImgQueue(section, extraImg))
-
       state.highLighted.map((d, i) => {
         dispatch(addToImgQueue(section, d))
       })
@@ -72,15 +70,10 @@ export const moveHiglighted = (section, extraImg) => {
     else {
       if (extraImg.id !== undefined) 
         dispatch(addToSection(section, extraImg))
-      
       state.highLighted.map((d, i) => {
         dispatch(addToSection(section, d))
       })
-
-
     }
-    
-
     dispatch({type: MOVE_HIGHLIGHTED})
 
   }
@@ -92,14 +85,10 @@ export const move_img = (section, img) => ({
   img
 })
 
-
-
 export const prepare_move = (imgToDropOn) => ({
   type: PREPARE_MOVE,
   imgToDropOn
 })
-
-
 
 export const updateName = (sectionId, name) => ({
   type: UPDATE_NAME,
@@ -111,6 +100,12 @@ export const highLighted = (section, img) => ({
   type: HIGH_LIGHTED,
   section,
   img
+})
+
+export const setButtonDown = (btnNum, val) => ({
+  type: SET_BTN_DOWN,
+  btnNum,
+  val
 })
 
 export const deleteSection = (section) => {
@@ -391,6 +386,10 @@ const ACTION_HANDLERS = {
     })
     state.highLighted = []
     return state
+  },
+  [SET_BTN_DOWN] : (state, action) => {
+    state.buttonsDown[action.btnNum] = action.val
+    return state
   }
 }
 
@@ -403,6 +402,7 @@ const initialState = {
   "imgQueue": newSection("ImgQueue", []),
   "dragTo": "",
   "highLighted": [],
+  "buttonsDown" :[0],
 }
 
 const deepCopy = (state) => {
