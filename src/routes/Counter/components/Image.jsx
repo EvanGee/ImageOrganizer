@@ -39,12 +39,14 @@ const Image = ({
     }
 
     const onMouseDown = e => {
-        setButtonDown("0", 1)
-        highLighted(section, img)
+        setButtonDown(0, 1)
+        if (e.shiftKey)
+            highLighted(section, img)
     }
 
     const onMouseUp = e => {
-        setButtonDown("0", 0)
+        setButtonDown(0, 0)
+        console.log("MOUSE UP")
     }
 
 

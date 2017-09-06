@@ -21,7 +21,7 @@ const Section = ({
     e.preventDefault();
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
-  
+    setButtonDown(0, 0)
     if (isHighlighted) {
       moveHiglighted(section, imgInfo.img)
     }
