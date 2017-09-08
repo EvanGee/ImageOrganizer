@@ -18,15 +18,26 @@ const Image = ({
         //dragImg.src = img.src
         //e.dataTransfer.setDragImage(dragImg, 0, 0);
         //e.target.classList.add("dragging")
+
+
     }
 
     const dragOver = (e) => {
+        
+        var rect = e.target.getBoundingClientRect();
+        //console.log(rect.top, rect.right, rect.bottom, rect.left);
+        //console.log( e.clientX, e.clientY)
+        var x = e.clientX
+        var midX = (rect.right - rect.left) / 2
+        var midX = rect.right - midX
         prepareMove(img)
+
 
     }
 
     const dragEnter = (e) => {
         //e.target.classList.add("draggedOver")
+        
     }
 
     const dragLeave = (e) => {
@@ -52,6 +63,8 @@ const Image = ({
     const onMouseOver = e => {
         if (buttonsDown[0] > 0 && e.shiftKey)
             highLighted(section, img)
+
+
     }
 
 
