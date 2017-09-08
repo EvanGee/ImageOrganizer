@@ -46,7 +46,6 @@ const Image = ({
 
     const onMouseUp = e => {
         setButtonDown(0, 0)
-        console.log("MOUSE UP")
     }
 
 

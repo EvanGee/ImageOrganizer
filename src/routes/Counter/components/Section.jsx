@@ -22,14 +22,18 @@ const Section = ({
     var imgInfo = e.dataTransfer.getData("text")
     imgInfo = JSON.parse(imgInfo)
     setButtonDown(0, 0)
-    if (isHighlighted) {
-      moveHiglighted(section, imgInfo.img)
-    }
-    else if (imgInfo.section.id === section.id) {
+
+    //moving within a section
+    if (imgInfo.section.id === section.id) {
       moveImg(imgInfo.section, imgInfo.img)
 
     } else {
-      addToSection(section, imgInfo.img)
+      if (isHighlighted) {
+        moveHiglighted(section, imgInfo.img)
+      } else {
+        
+        addToSection(section, imgInfo.img)
+      }
     }
   }
 
@@ -50,7 +54,7 @@ const Section = ({
   }
 
   const onDragEnter = (e) => {
-    
+
   }
 
   const onDragExit = (e) => {
