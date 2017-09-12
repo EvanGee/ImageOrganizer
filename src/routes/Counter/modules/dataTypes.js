@@ -4,7 +4,8 @@ export const newImg = () => ({
     src: "",
     id: uuid.v4(),
     classes: ["imgs"],
-    uploadNum: -1
+    uploadNum: -1,
+    uploadName: ""
 })
 
 export const newSection = (name = "New Section", imgs) => ({

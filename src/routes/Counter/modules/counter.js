@@ -127,11 +127,11 @@ export const download = () => {
     var zip = JSZip()
     var state = getState()
     state.imgOrganizer.sections.map((section, i) => {
-      var prefix = i < 9 ? "0" + (i + 1) + "-" : (i + 1)
+      var prefix = i < 10 ? "0" + (i + 1) + "-" : (i + 1)
       if (section.imgs.length !== 0) {
         section.imgs.map((d, j) => {
           var blob = state.imgOrganizer.blobs[d.src]
-          var postfix = j < 9 ? "-0" + (j + 1) : "-" + (j + 1)
+          var postfix = j < 10 ? "-0" + (j + 1) : "-" + (j + 1)
           var name = prefix + section.name + postfix + "." + blob.type.split("/")[1]
           zip.file(name, blob);
         })
@@ -173,7 +173,8 @@ export const addImage = (evt) => {
 
       var reader = new FileReader()
       const img = newImg()
-      img.uploadNum = i
+      img.uploadNum = i;
+      img.uploadName = file.name;
       reader.onloadend = (e) => {
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
@@ -300,7 +301,8 @@ const ACTION_HANDLERS = {
   },
   [ADD_IMAGE]: (state, action) => {
     state.imgQueue.imgs.push(action.img)
-    state.imgQueue.imgs.sort((imgA, imgB) => imgA.uploadNum - imgB.uploadNum)
+    console.log(action.img.uploadName)
+    state.imgQueue.imgs.sort((imgA, imgB) => imgA.uploadName - imgB.uploadName)
     return state
   },
   [ADD_SECTION]: (state, action) => {
