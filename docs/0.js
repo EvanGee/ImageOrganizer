@@ -33052,14 +33052,23 @@ var Image = function Image(_ref) {
         //dragImg.src = img.src
         //e.dataTransfer.setDragImage(dragImg, 0, 0);
         //e.target.classList.add("dragging")
+
     };
 
     var dragOver = function dragOver(e) {
+
+        var rect = e.target.getBoundingClientRect();
+        //console.log(rect.top, rect.right, rect.bottom, rect.left);
+        //console.log( e.clientX, e.clientY)
+        var x = e.clientX;
+        var midX = (rect.right - rect.left) / 2;
+        var midX = rect.right - midX;
         prepareMove(img);
     };
 
     var dragEnter = function dragEnter(e) {
         //e.target.classList.add("draggedOver")
+
     };
 
     var dragLeave = function dragLeave(e) {
@@ -33421,55 +33430,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     implementing our wrapper around increment; the component doesn't care   */
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-    return {
-        addImage: function addImage(e) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addImage"])(e));
-        },
-        addSection: function addSection() {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addSection"])());
-        },
-        addToImgQueue: function addToImgQueue(section, img) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addToImgQueue"])(section, img));
-        },
-        addToSection: function addToSection(section, img) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addToSection"])(section, img));
-        },
-        highLighted: function highLighted(section, img) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["highLighted"])(section, img));
-        },
-        updateName: function updateName(sectionId, name) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["updateName"])(sectionId, name));
-        },
-        download: function download() {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["download"])());
-        },
-        moveImg: function moveImg(section, img) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["move_img"])(section, img));
-        },
-        prepareMove: function prepareMove(imgToDropOn) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["prepare_move"])(imgToDropOn));
-        },
-        deleteSection: function deleteSection(section) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["deleteSection"])(section));
-        },
-        moveHiglighted: function moveHiglighted(section, extraImg) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["moveHiglighted"])(section, extraImg));
-        },
-        setButtonDown: function setButtonDown(btnNum, val) {
-            return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["setButtonDown"])(btnNum, val));
-        }
-    };
+  return {
+    addImage: function addImage(e) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addImage"])(e));
+    },
+    addSection: function addSection() {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addSection"])());
+    },
+    addToImgQueue: function addToImgQueue(section, img) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addToImgQueue"])(section, img));
+    },
+    addToSection: function addToSection(section, img) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addToSection"])(section, img));
+    },
+    highLighted: function highLighted(section, img) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["highLighted"])(section, img));
+    },
+    updateName: function updateName(sectionId, name) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["updateName"])(sectionId, name));
+    },
+    download: function download() {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["download"])());
+    },
+    moveImg: function moveImg(section, img) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["move_img"])(section, img));
+    },
+    prepareMove: function prepareMove(imgToDropOn) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["prepare_move"])(imgToDropOn));
+    },
+    deleteSection: function deleteSection(section) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["deleteSection"])(section));
+    },
+    moveHiglighted: function moveHiglighted(section, extraImg) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["moveHiglighted"])(section, extraImg));
+    },
+    setButtonDown: function setButtonDown(btnNum, val) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["setButtonDown"])(btnNum, val));
+    }
+  };
 };
 
 var mapStateToProps = function mapStateToProps(state) {
-    return {
-        imgQueue: state.imgOrganizer.imgQueue,
-        sections: state.imgOrganizer.sections,
-        isHighlighted: function () {
-            return state.imgOrganizer.highLighted.length > 0;
-        }(),
-        buttonsDown: state.imgOrganizer.buttonsDown
-    };
+  return {
+    imgQueue: state.imgOrganizer.imgQueue,
+    sections: state.imgOrganizer.sections,
+    isHighlighted: function () {
+      return state.imgOrganizer.highLighted.length > 0;
+    }(),
+    buttonsDown: state.imgOrganizer.buttonsDown
+  };
 };
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
@@ -33675,11 +33684,11 @@ var download = function download() {
     var zip = __WEBPACK_IMPORTED_MODULE_4_jszip___default()();
     var state = getState();
     state.imgOrganizer.sections.map(function (section, i) {
-      var prefix = i < 9 ? "0" + (i + 1) + "-" : i + 1;
+      var prefix = i < 10 ? "0" + (i + 1) + "-" : i + 1;
       if (section.imgs.length !== 0) {
         section.imgs.map(function (d, j) {
           var blob = state.imgOrganizer.blobs[d.src];
-          var postfix = j < 9 ? "-0" + (j + 1) : "-" + (j + 1);
+          var postfix = j < 10 ? "-0" + (j + 1) : "-" + (j + 1);
           var name = prefix + section.name + postfix + "." + blob.type.split("/")[1];
           zip.file(name, blob);
         });
@@ -33719,6 +33728,7 @@ var addImage = function addImage(evt) {
 
       var img = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["a" /* newImg */])();
       img.uploadNum = i;
+      img.uploadName = file.name;
       reader.onloadend = function (e) {
         var blob = new Blob([e.target.result], { type: file.type });
         var url = URL.createObjectURL(blob);
@@ -33885,8 +33895,9 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, ADD_IMAGE, function (state, action) {
   state.imgQueue.imgs.push(action.img);
+  console.log(action.img.uploadName);
   state.imgQueue.imgs.sort(function (imgA, imgB) {
-    return imgA.uploadNum - imgB.uploadNum;
+    return imgA.uploadName - imgB.uploadName;
   });
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, ADD_SECTION, function (state, action) {
@@ -34015,7 +34026,8 @@ var newImg = function newImg() {
         src: "",
         id: __WEBPACK_IMPORTED_MODULE_1_uuid___default.a.v4(),
         classes: ["imgs"],
-        uploadNum: -1
+        uploadNum: -1,
+        uploadName: ""
     };
 };
 

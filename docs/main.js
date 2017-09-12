@@ -1857,7 +1857,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss":
+/***/ "./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
@@ -1872,7 +1872,7 @@ exports.push([module.i, "[draggable]{-moz-user-select:none;-webkit-user-select:n
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss":
+/***/ "./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
@@ -1887,7 +1887,7 @@ exports.push([module.i, ".duck{display:block;width:120px;margin:1.5rem auto}", "
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss":
+/***/ "./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(false);
@@ -7609,7 +7609,7 @@ PageLayout.propTypes = {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss");
+var content = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss");
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -7623,8 +7623,8 @@ if(content.locals) module.exports = content.locals;
 if(true) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss", function() {
-			var newContent = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss");
+		module.hot.accept("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss", function() {
+			var newContent = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/layouts/PageLayout/PageLayout.scss");
 			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
 			update(newContent);
 		});
@@ -7773,7 +7773,7 @@ var HomeView = function HomeView() {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss");
+var content = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss");
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -7787,8 +7787,8 @@ if(content.locals) module.exports = content.locals;
 if(true) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss", function() {
-			var newContent = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss");
+		module.hot.accept("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss", function() {
+			var newContent = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/routes/Home/components/HomeView.scss");
 			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
 			update(newContent);
 		});
@@ -8053,7 +8053,7 @@ module.exports = __webpack_require__.p + "fonts/fontawesome-webfont.woff";
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss");
+var content = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss");
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -8067,8 +8067,8 @@ if(content.locals) module.exports = content.locals;
 if(true) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss", function() {
-			var newContent = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"C:/Users/MacEwan CC Library/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss");
+		module.hot.accept("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss", function() {
+			var newContent = __webpack_require__("./node_modules/css-loader/index.js?{\"sourceMap\":false,\"minimize\":{\"autoprefixer\":{\"add\":true,\"remove\":true,\"browsers\":[\"last 2 versions\"]},\"discardComments\":{\"removeAll\":true},\"discardUnused\":false,\"mergeIdents\":false,\"reduceIdents\":false,\"safe\":true,\"sourcemap\":false}}!./node_modules/sass-loader/lib/loader.js?{\"sourceMap\":false,\"includePaths\":[\"/home/michelle/Desktop/ImageOrganizer/src/styles\"]}!./src/styles/main.scss");
 			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
 			update(newContent);
 		});
