@@ -33684,7 +33684,7 @@ var download = function download() {
     var zip = __WEBPACK_IMPORTED_MODULE_4_jszip___default()();
     var state = getState();
     state.imgOrganizer.sections.map(function (section, i) {
-      var prefix = i < 9 ? "0" + (i + 1) + "-" : i + 1;
+      var prefix = i < 9 ? "0" + (i + 1) + "-" : i + 1 + "-";
       if (section.imgs.length !== 0) {
         section.imgs.map(function (d, j) {
           var blob = state.imgOrganizer.blobs[d.src];
@@ -33897,7 +33897,7 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
   state.imgQueue.imgs.push(action.img);
   console.log(action.img.uploadName);
   state.imgQueue.imgs.sort(function (imgA, imgB) {
-    return imgA.uploadName - imgB.uploadName;
+    return imgA.uploadName.localeCompare(imgB.uploadName);
   });
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, ADD_SECTION, function (state, action) {

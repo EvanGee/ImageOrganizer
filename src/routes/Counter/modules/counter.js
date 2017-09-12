@@ -127,7 +127,7 @@ export const download = () => {
     var zip = JSZip()
     var state = getState()
     state.imgOrganizer.sections.map((section, i) => {
-      var prefix = i < 9 ? "0" + (i + 1) + "-" : (i + 1)
+      var prefix = i < 9 ? "0" + (i + 1) + "-" : (i + 1) + "-"
       if (section.imgs.length !== 0) {
         section.imgs.map((d, j) => {
           var blob = state.imgOrganizer.blobs[d.src]
@@ -302,7 +302,7 @@ const ACTION_HANDLERS = {
   [ADD_IMAGE]: (state, action) => {
     state.imgQueue.imgs.push(action.img)
     console.log(action.img.uploadName)
-    state.imgQueue.imgs.sort((imgA, imgB) => imgA.uploadName - imgB.uploadName)
+    state.imgQueue.imgs.sort((imgA, imgB) => imgA.uploadName.localeCompare(imgB.uploadName))
     return state
   },
   [ADD_SECTION]: (state, action) => {
