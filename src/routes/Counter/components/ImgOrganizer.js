@@ -23,7 +23,9 @@ export const imgOrganizer = (props = {
   isHighlighted,
   moveHiglighted,
   buttonsDown,
-  setButtonDown
+  setButtonDown,
+  addClass,
+  removeClass
   
 }) => {
 

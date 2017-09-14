@@ -9,7 +9,9 @@ const Image = ({
     extraClass,
     highLighted,
     buttonsDown,
-    setButtonDown
+    setButtonDown,
+    addClass,
+    removeClass
     }) => {
 
     const dragStart = (e) => {
@@ -23,21 +25,42 @@ const Image = ({
     }
 
     const dragOver = (e) => {
-        
+
         var rect = e.target.getBoundingClientRect();
-        //console.log(rect.top, rect.right, rect.bottom, rect.left);
-        //console.log( e.clientX, e.clientY)
         var x = e.clientX
+        var y = e.clientY
         var midX = (rect.right - rect.left) / 2
         var midX = rect.right - midX
-        prepareMove(img)
+        var midY = (rect.bottom - rect.top) / 2
+        var midY = rect.bottom - midY
+        var direction =
+            {
+                left: false,
+                top: false,
+                bottom: false,
+                right: false
+            }
+
+        if (x < midX) {
+            direction.left = true
+          
+        } else {
+            direction.right = true
+        }
+        if (y < midY) {
+            direction.top = true
+        } else {
+            direction.bottom = true
+        }
+        prepareMove(img, direction)
+
 
 
     }
 
     const dragEnter = (e) => {
         //e.target.classList.add("draggedOver")
-        
+
     }
 
     const dragLeave = (e) => {
@@ -77,8 +100,8 @@ const Image = ({
             className={img.classes.join(" ") + " " + extraClass}
             onDragStart={e => dragStart(e)}
             onMouseDown={e => onMouseDown(e)}
-            onMouseOver={e=>onMouseOver(e)}
-            onMouseUp={e=>onMouseUp(e)}
+            onMouseOver={e => onMouseOver(e)}
+            onMouseUp={e => onMouseUp(e)}
             draggable="true"
             style={{ backgroundImage: `url(${img.src})` }}
             alt=""

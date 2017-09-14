@@ -14,7 +14,9 @@ const Section = ({
   moveHiglighted,
   highLighted,
   buttonsDown,
-  setButtonDown
+  setButtonDown,
+  addClass,
+  removeClass
 }) => {
 
   const drop = (e) => {
@@ -74,7 +76,7 @@ const Section = ({
         <span className="fa fa-times fa-2x closeX" onClick={() => deleteSec()} aria-hidden="true" />
       </div>
       {
-        section.imgs.map((d, i) => <Image extraClass="sectionImg" img={d} i={i} key={i} {...{ section, prepareMove, highLighted, buttonsDown, setButtonDown }} />)
+        section.imgs.map((d, i) => <Image extraClass="sectionImg" img={d} i={i} key={i} {...{ section, prepareMove, highLighted, buttonsDown, setButtonDown, addClass, removeClass }} />)
       }
     </div>
   )

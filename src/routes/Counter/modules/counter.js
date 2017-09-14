@@ -22,6 +22,8 @@ export const HIGH_LIGHTED = "HIGH_LIGHTED"
 const ADD_TO_BLOBS = "ADD_TO_BLOBS"
 export const MOVE_HIGHLIGHTED = "MOVE_HIGHLIGHTED"
 export const SET_BTN_DOWN = "SET_BTN_DOWN"
+const ADD_CLASS = "ADD_CLASS"
+const REMOVE_CLASS = "REMOVE_CLASS"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -55,6 +57,18 @@ export const addToImgQueue = (section, img) => ({
   img,
 })
 
+export const addClass = (item, cssClass) => ({
+type: ADD_CLASS,
+item,
+cssClass
+})
+
+export const removeClass = (item, cssClass) => ({
+  type: REMOVE_CLASS,
+  item,
+  cssClass
+  })
+
 export const moveHiglighted = (section, extraImg) => {
 
   return (dispatch, getState) => {
@@ -85,9 +99,10 @@ export const move_img = (section, img) => ({
   img
 })
 
-export const prepare_move = (imgToDropOn) => ({
+export const prepare_move = (imgToDropOn, direction) => ({
   type: PREPARE_MOVE,
-  imgToDropOn
+  imgToDropOn,
+  direction
 })
 
 export const updateName = (sectionId, name) => ({
@@ -289,6 +304,12 @@ const findSectionIndex = (state, section) => {
   return index
 }
 
+const moveImg = (state) => {
+  console.log(state.highLighted)
+  console.log(state.dragTo.direction)
+  console.log(state.dragTo.img)
+}
+
 
 
 // ------------------------------------
@@ -327,9 +348,11 @@ const ACTION_HANDLERS = {
     return state
   },
   [MOVE_IMG]: (state, action) => {
+    moveImg(state)
+
     if (action.section.id === state.imgQueue.id) {
       let section = state.imgQueue
-      let ind1 = findImgIndex(section, state.dragTo)
+      let ind1 = findImgIndex(section, state.dragTo.img)
       let ind2 = findImgIndex(section, action.img)
       let tmp = section.imgs[ind1]
       section.imgs[ind1] = section.imgs[ind2]
@@ -338,7 +361,7 @@ const ACTION_HANDLERS = {
 
       state.sections.map((section, i) => {
         if (section.id === action.section.id) {
-          let ind1 = findImgIndex(section, state.dragTo)
+          let ind1 = findImgIndex(section, state.dragTo.img)
           let ind2 = findImgIndex(section, action.img)
           let tmp = section.imgs[ind1]
 
@@ -351,7 +374,7 @@ const ACTION_HANDLERS = {
     return state
   },
   [PREPARE_MOVE]: (state, action) => {
-    state.dragTo = action.imgToDropOn
+    state.dragTo = {img: action.imgToDropOn, direction: action.direction}
     return state
   },
   [DELETE_SECTION]: (state, action) => {
@@ -392,6 +415,17 @@ const ACTION_HANDLERS = {
   [SET_BTN_DOWN] : (state, action) => {
     state.buttonsDown[action.btnNum] = action.val
     return state
+  },
+  [ADD_CLASS] : (state, action) => {
+    if (action.item.type === img) {
+      let img = findImgInState(state, action.item)
+      img.classes.includes(action.class) ? null : img.classes.push(action.class)
+    }
+    return state
+  },
+  [REMOVE_CLASS]: (state, action) => {
+
+    return state
   }
 }
 
@@ -402,7 +436,7 @@ const initialState = {
   "blobs": {},
   "sections": [newSection("Section Name", [])],
   "imgQueue": newSection("ImgQueue", []),
-  "dragTo": "",
+  "dragTo": {},
   "highLighted": [],
   "buttonsDown" :[0],
 }

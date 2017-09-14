@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { addImage, addSection, addToSection, addToImgQueue,
         updateName, download, move_img, prepare_move, deleteSection,
-        highLighted, moveHiglighted, setButtonDown } from '../modules/counter'
+        highLighted, moveHiglighted, setButtonDown, addClass,
+        removeClass } from '../modules/counter'
 
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -24,10 +25,12 @@ const mapDispatchToProps = (dispatch) => ({
   updateName: (sectionId, name) => dispatch(updateName(sectionId, name)),
   download: () => dispatch(download()),
   moveImg: (section, img) => dispatch(move_img(section, img)),
-  prepareMove: (imgToDropOn) => dispatch(prepare_move(imgToDropOn)),
+  prepareMove: (imgToDropOn, direction) => dispatch(prepare_move(imgToDropOn, direction)),
   deleteSection: (section) => dispatch(deleteSection(section)),
   moveHiglighted: (section, extraImg) => dispatch(moveHiglighted(section, extraImg)),
-  setButtonDown: (btnNum, val) => dispatch(setButtonDown(btnNum, val))
+  setButtonDown: (btnNum, val) => dispatch(setButtonDown(btnNum, val)),
+  addClass: (item, clas) => dispatch(addClass(item, clas)),
+  removeClass: (item, clas) => dispatch(removeClass(item, clas)),
 })
 
 

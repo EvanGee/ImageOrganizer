@@ -5,10 +5,12 @@ export const newImg = () => ({
     id: uuid.v4(),
     classes: ["imgs"],
     uploadNum: -1,
-    uploadName: ""
+    uploadName: "",
+    type: "img"
 })
 
 export const newSection = (name = "New Section", imgs) => ({
+    type: "section",
     name,
     id: uuid.v4(),
     imgs: [...imgs],
