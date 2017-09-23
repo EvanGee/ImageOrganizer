@@ -6,6 +6,13 @@ import {
 } from 'routes/Counter/modules/counter'
 
 describe('(Redux Module) Counter', () => {
+
+
+}
+
+
+/*
+describe('(Redux Module) Counter', () => {
   it('Should export a constant COUNTER_INCREMENT.', () => {
     expect(COUNTER_INCREMENT).to.equal('COUNTER_INCREMENT')
   })
@@ -123,3 +130,4 @@ describe('(Redux Module) Counter', () => {
     })
   })
 })
+*/

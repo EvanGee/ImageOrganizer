@@ -53,6 +53,9 @@ const Image = ({
             direction.bottom = true
         }
         prepareMove(img, direction)
+        if (direction.left === true) {
+            addClass(img, "moveLeft");
+        }
 
 
 

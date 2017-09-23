@@ -19,12 +19,12 @@ export const MOVE_IMG = "MOVE_IMG"
 export const PREPARE_MOVE = "PREPARE_MOVE"
 export const DELETE_SECTION = "DELETE_SECTION"
 export const HIGH_LIGHTED = "HIGH_LIGHTED"
-const ADD_TO_BLOBS = "ADD_TO_BLOBS"
+export const ADD_TO_BLOBS = "ADD_TO_BLOBS"
 export const MOVE_HIGHLIGHTED = "MOVE_HIGHLIGHTED"
 export const SET_BTN_DOWN = "SET_BTN_DOWN"
-const ADD_CLASS = "ADD_CLASS"
-const REMOVE_CLASS = "REMOVE_CLASS"
-const CHANGE_NAME = "CHANGE_NAME"
+export const ADD_CLASS = "ADD_CLASS"
+export const REMOVE_CLASS = "REMOVE_CLASS"
+export const CHANGE_NAME = "CHANGE_NAME"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -226,22 +226,22 @@ const removeImg = (state, img) => {
 
 }
 
-const findImgInState = (state, imgs) => {
+const findImgInState = (state, img) => {
   for (var [key, value] of Object.entries(state)) {
     if (key === "imgQueue") {
-      let img = findImgInSection(state.imgQueue, img)
-      if (img !== -1) {
-        return img
+      const im = findImgInSection(state.imgQueue, img)
+      if (im !== -1) {
+        return im
       }
     }
-
     else if (key === "sections") {
+      let found = 0
       state.sections.map((section, i) => {
-        let img = findImgInSection(section, img)
-        if (img !== -1) {
-          return img
-        }
+        let im = findImgInSection(section, img)
+        if (im !== -1)
+          found = im
       })
+      return found
     }
   }
 
@@ -297,9 +297,9 @@ const findSectionIndex = (state, section) => {
 }
 
 const moveImg = (state) => {
-  console.log(state.highLighted)
-  console.log(state.dragTo.direction)
-  console.log(state.dragTo.img)
+  //console.log(state.highLighted)
+  //console.log(state.dragTo.direction)
+  //console.log(state.dragTo.img)
 }
 
 
@@ -314,7 +314,6 @@ const ACTION_HANDLERS = {
   },
   [ADD_IMAGE]: (state, action) => {
     state.imgQueue.imgs.push(action.img)
-    console.log(action.img.uploadName)
     state.imgQueue.imgs.sort((imgA, imgB) => imgA.uploadName.localeCompare(imgB.uploadName))
     return state
   },
@@ -413,14 +412,20 @@ const ACTION_HANDLERS = {
     return state
   },
   [ADD_CLASS]: (state, action) => {
-    if (action.item.type === img) {
+    if (action.item.type === "img") {
       let img = findImgInState(state, action.item)
-      img.classes.includes(action.class) ? null : img.classes.push(action.class)
+      console.log(img)
+      img.classes.includes(action.cssClass) ? null : img.classes.push(action.cssClass)
     }
     return state
   },
   [REMOVE_CLASS]: (state, action) => {
-
+    if (action.item.type === "img") {
+      let img = findImgInState(state, action.item)
+      //console.log(img.classes)
+      img.classes.includes(action.cssClass) ? null : img.classes.splice(indexof(action.cssClass) + 1)
+      //console.log(img.classes)
+    }
     return state
   }
 }
@@ -429,15 +434,17 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  "blobs": {},
+  "imgQueue": newSection("imgQueue", []),
   "sections": [newSection("Exterior", []),
-  newSection("Kitchen", []),
-  newSection("Dining Area", []),
-  newSection("Living Room", []),
-  newSection("Master Bedroom", []),
-  newSection("Master Ensuite", []),
-  newSection("Second Bedroom", [])],
-  "imgQueue": newSection("Second Bathroom", []),
+              newSection("Kitchen", []),
+              newSection("Dining Area", []),
+              newSection("Living Room", []),
+              newSection("Master Bedroom", []),
+              newSection("Master Ensuite", []),
+              newSection("Second Bedroom", []),
+              newSection("Second Bathroom", [])],
+
+  "blobs": {},
   "dragTo": {},
   "highLighted": [],
   "buttonsDown": [0],

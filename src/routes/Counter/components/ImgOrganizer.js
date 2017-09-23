@@ -39,7 +39,7 @@ export const imgOrganizer = (props = {
         </label>
         <span className="col-xs-6 col-sm-2 col-md-2 col-lg-2 hand btn" aria-hidden="true" onClick={props.download}>Export</span>
         <span className="col-xs-0 col-sm-1 col-md-1 col-lg-3" />
-        <input type="text" name="name" value={props.downloadName} onChange={(e)=>props.changeDownloadName(e.target.value)} className="col-xs-12 col-sm-5 col-md-5 col-lg-4 name "S />
+        <input type="text" name="name" value={props.downloadName} onChange={(e)=>props.changeDownloadName(e.target.value)} className="col-xs-12 col-sm-5 col-md-5 col-lg-4 name " />
       </div>
 
       <div className="row" >
