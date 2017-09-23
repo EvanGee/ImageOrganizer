@@ -33043,7 +33043,9 @@ var Image = function Image(_ref) {
         extraClass = _ref.extraClass,
         highLighted = _ref.highLighted,
         buttonsDown = _ref.buttonsDown,
-        setButtonDown = _ref.setButtonDown;
+        setButtonDown = _ref.setButtonDown,
+        addClass = _ref.addClass,
+        removeClass = _ref.removeClass;
 
 
     var dragStart = function dragStart(e) {
@@ -33058,12 +33060,30 @@ var Image = function Image(_ref) {
     var dragOver = function dragOver(e) {
 
         var rect = e.target.getBoundingClientRect();
-        //console.log(rect.top, rect.right, rect.bottom, rect.left);
-        //console.log( e.clientX, e.clientY)
         var x = e.clientX;
+        var y = e.clientY;
         var midX = (rect.right - rect.left) / 2;
         var midX = rect.right - midX;
-        prepareMove(img);
+        var midY = (rect.bottom - rect.top) / 2;
+        var midY = rect.bottom - midY;
+        var direction = {
+            left: false,
+            top: false,
+            bottom: false,
+            right: false
+        };
+
+        if (x < midX) {
+            direction.left = true;
+        } else {
+            direction.right = true;
+        }
+        if (y < midY) {
+            direction.top = true;
+        } else {
+            direction.bottom = true;
+        }
+        prepareMove(img, direction);
     };
 
     var dragEnter = function dragEnter(e) {
@@ -33149,14 +33169,12 @@ var Image = function Image(_ref) {
 
 
 
-var drag = function drag(e) {
-  e.dataTransfer.setData("text", e.target.id);
-};
 
 var imgOrganizer = function imgOrganizer() {
   var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     sections: sections,
     imgQueue: imgQueue,
+    downloadName: downloadName,
     addImage: addImage,
     addSection: addSection,
     addToImgQueue: addToImgQueue,
@@ -33170,7 +33188,10 @@ var imgOrganizer = function imgOrganizer() {
     isHighlighted: isHighlighted,
     moveHiglighted: moveHiglighted,
     buttonsDown: buttonsDown,
-    setButtonDown: setButtonDown
+    setButtonDown: setButtonDown,
+    addClass: addClass,
+    removeClass: removeClass,
+    changeDownloadName: changeDownloadName
 
   };
 
@@ -33198,12 +33219,10 @@ var imgOrganizer = function imgOrganizer() {
         { className: 'col-xs-6 col-sm-2 col-md-2 col-lg-2 hand btn', 'aria-hidden': 'true', onClick: props.download },
         'Export'
       ),
-      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('span', { className: 'col-xs-0 col-sm-4 col-md-5 col-lg-5' }),
-      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        'span',
-        { className: 'col-xs-12 col-sm-2 col-md-2 col-lg-2 name' },
-        'Your name here'
-      )
+      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('span', { className: 'col-xs-0 col-sm-1 col-md-1 col-lg-3' }),
+      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('input', { type: 'text', name: 'name', value: props.downloadName, onChange: function onChange(e) {
+          return props.changeDownloadName(e.target.value);
+        }, className: 'col-xs-12 col-sm-5 col-md-5 col-lg-4 name ', S: true })
     ),
     __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
       'div',
@@ -33259,7 +33278,9 @@ var Section = function Section(_ref) {
       isHighlighted = _ref.isHighlighted,
       moveHiglighted = _ref.moveHiglighted,
       buttonsDown = _ref.buttonsDown,
-      setButtonDown = _ref.setButtonDown;
+      setButtonDown = _ref.setButtonDown,
+      addClass = _ref.addClass,
+      removeClass = _ref.removeClass;
 
 
   var drop = function drop(e) {
@@ -33291,7 +33312,8 @@ var Section = function Section(_ref) {
       "div",
       { className: "QueueContainer center" },
       section.imgs.map(function (d, i) {
-        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ img: d, extraClass: "imgQueueImg", i: i, key: i }, { section: section, prepareMove: prepareMove, highLighted: highLighted, buttonsDown: buttonsDown, setButtonDown: setButtonDown }));
+        return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ img: d, extraClass: "imgQueueImg", i: i, key: i }, { section: section, prepareMove: prepareMove, highLighted: highLighted, buttonsDown: buttonsDown, addClass: addClass,
+          removeClass: removeClass, setButtonDown: setButtonDown }));
       })
     )
   );
@@ -33329,7 +33351,9 @@ var Section = function Section(_ref) {
       moveHiglighted = _ref.moveHiglighted,
       highLighted = _ref.highLighted,
       buttonsDown = _ref.buttonsDown,
-      setButtonDown = _ref.setButtonDown;
+      setButtonDown = _ref.setButtonDown,
+      addClass = _ref.addClass,
+      removeClass = _ref.removeClass;
 
 
   var drop = function drop(e) {
@@ -33396,7 +33420,7 @@ var Section = function Section(_ref) {
         }, 'aria-hidden': 'true' })
     ),
     section.imgs.map(function (d, i) {
-      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ extraClass: 'sectionImg', img: d, i: i, key: i }, { section: section, prepareMove: prepareMove, highLighted: highLighted, buttonsDown: buttonsDown, setButtonDown: setButtonDown }));
+      return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Image__["a" /* default */], __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({ extraClass: 'sectionImg', img: d, i: i, key: i }, { section: section, prepareMove: prepareMove, highLighted: highLighted, buttonsDown: buttonsDown, setButtonDown: setButtonDown, addClass: addClass, removeClass: removeClass }));
     })
   );
 };
@@ -33455,8 +33479,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     moveImg: function moveImg(section, img) {
       return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["move_img"])(section, img));
     },
-    prepareMove: function prepareMove(imgToDropOn) {
-      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["prepare_move"])(imgToDropOn));
+    prepareMove: function prepareMove(imgToDropOn, direction) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["prepare_move"])(imgToDropOn, direction));
     },
     deleteSection: function deleteSection(section) {
       return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["deleteSection"])(section));
@@ -33466,6 +33490,15 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     setButtonDown: function setButtonDown(btnNum, val) {
       return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["setButtonDown"])(btnNum, val));
+    },
+    addClass: function addClass(item, clas) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["addClass"])(item, clas));
+    },
+    removeClass: function removeClass(item, clas) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["removeClass"])(item, clas));
+    },
+    changeDownloadName: function changeDownloadName(name) {
+      return dispatch(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__modules_counter__["changeDownloadName"])(name));
     }
   };
 };
@@ -33477,7 +33510,8 @@ var mapStateToProps = function mapStateToProps(state) {
     isHighlighted: function () {
       return state.imgOrganizer.highLighted.length > 0;
     }(),
-    buttonsDown: state.imgOrganizer.buttonsDown
+    buttonsDown: state.imgOrganizer.buttonsDown,
+    downloadName: state.imgOrganizer.downloadName
   };
 };
 
@@ -33518,6 +33552,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_BTN_DOWN", function() { return SET_BTN_DOWN; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addToSection", function() { return addToSection; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addToImgQueue", function() { return addToImgQueue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addClass", function() { return addClass; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeClass", function() { return removeClass; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeDownloadName", function() { return changeDownloadName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "moveHiglighted", function() { return moveHiglighted; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "move_img", function() { return move_img; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prepare_move", function() { return prepare_move; });
@@ -33566,6 +33603,9 @@ var HIGH_LIGHTED = "HIGH_LIGHTED";
 var ADD_TO_BLOBS = "ADD_TO_BLOBS";
 var MOVE_HIGHLIGHTED = "MOVE_HIGHLIGHTED";
 var SET_BTN_DOWN = "SET_BTN_DOWN";
+var ADD_CLASS = "ADD_CLASS";
+var REMOVE_CLASS = "REMOVE_CLASS";
+var CHANGE_NAME = "CHANGE_NAME";
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -33607,6 +33647,29 @@ var addToImgQueue = function addToImgQueue(section, img) {
   };
 };
 
+var addClass = function addClass(item, cssClass) {
+  return {
+    type: ADD_CLASS,
+    item: item,
+    cssClass: cssClass
+  };
+};
+
+var removeClass = function removeClass(item, cssClass) {
+  return {
+    type: REMOVE_CLASS,
+    item: item,
+    cssClass: cssClass
+  };
+};
+
+var changeDownloadName = function changeDownloadName(name) {
+  return {
+    type: CHANGE_NAME,
+    name: name
+  };
+};
+
 var moveHiglighted = function moveHiglighted(section, extraImg) {
 
   return function (dispatch, getState) {
@@ -33634,10 +33697,11 @@ var move_img = function move_img(section, img) {
   };
 };
 
-var prepare_move = function prepare_move(imgToDropOn) {
+var prepare_move = function prepare_move(imgToDropOn, direction) {
   return {
     type: PREPARE_MOVE,
-    imgToDropOn: imgToDropOn
+    imgToDropOn: imgToDropOn,
+    direction: direction
   };
 };
 
@@ -33696,22 +33760,10 @@ var download = function download() {
     });
 
     zip.generateAsync({ type: "blob" }).then(function (content) {
-      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_file_saver__["saveAs"])(content, "Images.zip");
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3_file_saver__["saveAs"])(content, state.imgOrganizer.downloadName + ".zip");
     });
   };
 };
-
-//Special thanks to mal hasaranga perera for the binary.charCode idea
-function dataURItoBlob(dataURI) {
-  var metaData = dataURI.split(',');
-  var binary = atob(metaData[1]);
-  var type = metaData[0].split("/")[1].split(";")[0];
-  var array = [];
-  for (var i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
-  }
-  return new Blob([new Uint8Array(array)], { type: 'image/' + type });
-}
 
 var addImage = function addImage(evt) {
 
@@ -33887,6 +33939,12 @@ var findSectionIndex = function findSectionIndex(state, section) {
   return index;
 };
 
+var moveImg = function moveImg(state) {
+  console.log(state.highLighted);
+  console.log(state.dragTo.direction);
+  console.log(state.dragTo.img);
+};
+
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
@@ -33911,15 +33969,20 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
   removeImg(state, action.img);
   insertImg(state.imgQueue, "imgQueue", action.img, null);
   return state;
+}), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, CHANGE_NAME, function (state, action) {
+  state.downloadName = action.name;
+  return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, UPDATE_NAME, function (state, action) {
   state.sections.map(function (d) {
     if (d.id === action.sectionId) d.name = action.payload;
   });
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, MOVE_IMG, function (state, action) {
+  moveImg(state);
+
   if (action.section.id === state.imgQueue.id) {
     var section = state.imgQueue;
-    var ind1 = findImgIndex(section, state.dragTo);
+    var ind1 = findImgIndex(section, state.dragTo.img);
     var ind2 = findImgIndex(section, action.img);
     var tmp = section.imgs[ind1];
     section.imgs[ind1] = section.imgs[ind2];
@@ -33928,7 +33991,7 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
 
     state.sections.map(function (section, i) {
       if (section.id === action.section.id) {
-        var _ind = findImgIndex(section, state.dragTo);
+        var _ind = findImgIndex(section, state.dragTo.img);
         var _ind2 = findImgIndex(section, action.img);
         var _tmp = section.imgs[_ind];
 
@@ -33939,7 +34002,7 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
   }
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, PREPARE_MOVE, function (state, action) {
-  state.dragTo = action.imgToDropOn;
+  state.dragTo = { img: action.imgToDropOn, direction: action.direction };
   return state;
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, DELETE_SECTION, function (state, action) {
   var ind = findSectionIndex(state, action.section);
@@ -33976,6 +34039,15 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
 }), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, SET_BTN_DOWN, function (state, action) {
   state.buttonsDown[action.btnNum] = action.val;
   return state;
+}), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, ADD_CLASS, function (state, action) {
+  if (action.item.type === img) {
+    var _img4 = findImgInState(state, action.item);
+    _img4.classes.includes(action.class) ? null : _img4.classes.push(action.class);
+  }
+  return state;
+}), __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_defineProperty___default()(_ACTION_HANDLERS, REMOVE_CLASS, function (state, action) {
+
+  return state;
 }), _ACTION_HANDLERS);
 
 // ------------------------------------
@@ -33983,11 +34055,12 @@ var ACTION_HANDLERS = (_ACTION_HANDLERS = {}, __WEBPACK_IMPORTED_MODULE_0_babel_
 // ------------------------------------
 var initialState = {
   "blobs": {},
-  "sections": [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Section Name", [])],
-  "imgQueue": __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("ImgQueue", []),
-  "dragTo": "",
+  "sections": [__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Exterior", []), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Kitchen", []), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Dining Area", []), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Living Room", []), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Master Bedroom", []), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Master Ensuite", []), __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Second Bedroom", [])],
+  "imgQueue": __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dataTypes__["b" /* newSection */])("Second Bathroom", []),
+  "dragTo": {},
   "highLighted": [],
-  "buttonsDown": [0]
+  "buttonsDown": [0],
+  "downloadName": "Property Address Photos"
 };
 
 var deepCopy = function deepCopy(state) {
@@ -34027,7 +34100,8 @@ var newImg = function newImg() {
         id: __WEBPACK_IMPORTED_MODULE_1_uuid___default.a.v4(),
         classes: ["imgs"],
         uploadNum: -1,
-        uploadName: ""
+        uploadName: "",
+        type: "img"
     };
 };
 
@@ -34035,6 +34109,7 @@ var newSection = function newSection() {
     var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "New Section";
     var imgs = arguments[1];
     return {
+        type: "section",
         name: name,
         id: __WEBPACK_IMPORTED_MODULE_1_uuid___default.a.v4(),
         imgs: [].concat(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_toConsumableArray___default()(imgs))
