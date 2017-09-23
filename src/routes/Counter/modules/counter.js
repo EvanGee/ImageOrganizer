@@ -24,6 +24,7 @@ export const MOVE_HIGHLIGHTED = "MOVE_HIGHLIGHTED"
 export const SET_BTN_DOWN = "SET_BTN_DOWN"
 const ADD_CLASS = "ADD_CLASS"
 const REMOVE_CLASS = "REMOVE_CLASS"
+const CHANGE_NAME = "CHANGE_NAME"
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -58,23 +59,28 @@ export const addToImgQueue = (section, img) => ({
 })
 
 export const addClass = (item, cssClass) => ({
-type: ADD_CLASS,
-item,
-cssClass
+  type: ADD_CLASS,
+  item,
+  cssClass
 })
 
 export const removeClass = (item, cssClass) => ({
   type: REMOVE_CLASS,
   item,
   cssClass
-  })
+})
+
+export const changeDownloadName = (name) => ({
+  type: CHANGE_NAME,
+  name,
+})
 
 export const moveHiglighted = (section, extraImg) => {
 
   return (dispatch, getState) => {
     let state = getState().imgOrganizer
     if (section.id === state.imgQueue.id) {
-      if (extraImg.id !== undefined) 
+      if (extraImg.id !== undefined)
         dispatch(addToImgQueue(section, extraImg))
       state.highLighted.map((d, i) => {
         dispatch(addToImgQueue(section, d))
@@ -82,13 +88,13 @@ export const moveHiglighted = (section, extraImg) => {
 
     }
     else {
-      if (extraImg.id !== undefined) 
+      if (extraImg.id !== undefined)
         dispatch(addToSection(section, extraImg))
       state.highLighted.map((d, i) => {
         dispatch(addToSection(section, d))
       })
     }
-    dispatch({type: MOVE_HIGHLIGHTED})
+    dispatch({ type: MOVE_HIGHLIGHTED })
 
   }
 }
@@ -155,26 +161,12 @@ export const download = () => {
 
     zip.generateAsync({ type: "blob" })
       .then(function (content) {
-        saveAs(content, "Images.zip");
+        saveAs(content, state.imgOrganizer.downloadName + ".zip");
       });
 
   }
 
 }
-
-//Special thanks to mal hasaranga perera for the binary.charCode idea
-function dataURItoBlob(dataURI) {
-  var metaData = dataURI.split(',')
-  var binary = atob(metaData[1]);
-  var type = metaData[0].split("/")[1].split(";")[0]
-  var array = [];
-  for (var i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
-  }
-  return new Blob([new Uint8Array(array)], { type: 'image/' + type });
-}
-
-
 
 export const addImage = (evt) => {
 
@@ -340,6 +332,10 @@ const ACTION_HANDLERS = {
     insertImg(state.imgQueue, "imgQueue", action.img, null)
     return state
   },
+  [CHANGE_NAME]: (state, action) => {
+    state.downloadName = action.name;
+    return state
+  },
   [UPDATE_NAME]: (state, action) => {
     state.sections.map((d) => {
       if (d.id === action.sectionId)
@@ -374,7 +370,7 @@ const ACTION_HANDLERS = {
     return state
   },
   [PREPARE_MOVE]: (state, action) => {
-    state.dragTo = {img: action.imgToDropOn, direction: action.direction}
+    state.dragTo = { img: action.imgToDropOn, direction: action.direction }
     return state
   },
   [DELETE_SECTION]: (state, action) => {
@@ -393,7 +389,7 @@ const ACTION_HANDLERS = {
 
     if (isThere === false) {
       state.highLighted.push(action.img)
-      
+
       if (action.section.id === state.imgQueue.id) {
         let img = findImgInSection(state.imgQueue, action.img)
         img.classes.push("highLighted")
@@ -412,11 +408,11 @@ const ACTION_HANDLERS = {
     state.highLighted = []
     return state
   },
-  [SET_BTN_DOWN] : (state, action) => {
+  [SET_BTN_DOWN]: (state, action) => {
     state.buttonsDown[action.btnNum] = action.val
     return state
   },
-  [ADD_CLASS] : (state, action) => {
+  [ADD_CLASS]: (state, action) => {
     if (action.item.type === img) {
       let img = findImgInState(state, action.item)
       img.classes.includes(action.class) ? null : img.classes.push(action.class)
@@ -434,11 +430,18 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   "blobs": {},
-  "sections": [newSection("Section Name", [])],
-  "imgQueue": newSection("ImgQueue", []),
+  "sections": [newSection("Exterior", []),
+  newSection("Kitchen", []),
+  newSection("Dining Area", []),
+  newSection("Living Room", []),
+  newSection("Master Bedroom", []),
+  newSection("Master Ensuite", []),
+  newSection("Second Bedroom", [])],
+  "imgQueue": newSection("Second Bathroom", []),
   "dragTo": {},
   "highLighted": [],
-  "buttonsDown" :[0],
+  "buttonsDown": [0],
+  "downloadName": "Property Address Photos"
 }
 
 const deepCopy = (state) => {

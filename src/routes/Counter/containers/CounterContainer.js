@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { addImage, addSection, addToSection, addToImgQueue,
         updateName, download, move_img, prepare_move, deleteSection,
         highLighted, moveHiglighted, setButtonDown, addClass,
-        removeClass } from '../modules/counter'
+        removeClass, changeDownloadName} from '../modules/counter'
 
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -31,6 +31,7 @@ const mapDispatchToProps = (dispatch) => ({
   setButtonDown: (btnNum, val) => dispatch(setButtonDown(btnNum, val)),
   addClass: (item, clas) => dispatch(addClass(item, clas)),
   removeClass: (item, clas) => dispatch(removeClass(item, clas)),
+  changeDownloadName: (name) => dispatch(changeDownloadName(name))
 })
 
 
@@ -38,7 +39,8 @@ const mapStateToProps = (state) => ({
   imgQueue : state.imgOrganizer.imgQueue,
   sections : state.imgOrganizer.sections,
   isHighlighted: (() => state.imgOrganizer.highLighted.length > 0)(),
-  buttonsDown: state.imgOrganizer.buttonsDown
+  buttonsDown: state.imgOrganizer.buttonsDown,
+  downloadName: state.imgOrganizer.downloadName
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

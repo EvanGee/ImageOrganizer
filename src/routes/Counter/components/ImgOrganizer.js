@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import Section from "./Section"
 import Image from "./Image"
 import QueueSection from "./QueueSection"
-const drag = (e) => {
-  e.dataTransfer.setData("text", e.target.id);
-}
+
+
 
 export const imgOrganizer = (props = {
   sections,
   imgQueue,
+  downloadName,
   addImage,
   addSection,
   addToImgQueue,
@@ -25,10 +25,10 @@ export const imgOrganizer = (props = {
   buttonsDown,
   setButtonDown,
   addClass,
-  removeClass
-  
-}) => {
+  removeClass,
+  changeDownloadName
 
+}) => {
 
   return (
     <div >
@@ -38,8 +38,8 @@ export const imgOrganizer = (props = {
           <input type="file" style={{ display: "none" }} className="inputBtn" multiple onChange={(e) => props.addImage(e)} />
         </label>
         <span className="col-xs-6 col-sm-2 col-md-2 col-lg-2 hand btn" aria-hidden="true" onClick={props.download}>Export</span>
-        <span className="col-xs-0 col-sm-4 col-md-5 col-lg-5" /> 
-        <span className="col-xs-12 col-sm-2 col-md-2 col-lg-2 name">Your name here</span>
+        <span className="col-xs-0 col-sm-1 col-md-1 col-lg-3" />
+        <input type="text" name="name" value={props.downloadName} onChange={(e)=>props.changeDownloadName(e.target.value)} className="col-xs-12 col-sm-5 col-md-5 col-lg-4 name "S />
       </div>
 
       <div className="row" >
@@ -49,8 +49,8 @@ export const imgOrganizer = (props = {
         <div className="col-9">
           {
             props.sections.map((section, i) => <Section key={i} section={section} classnames={["sections"]}  {...props} />)
-          } 
-          <span onClick={() => props.addSection()} className="sectionAddButt fa fa-plus-circle fa-3x hand"  aria-hidden="true"></span>
+          }
+          <span onClick={() => props.addSection()} className="sectionAddButt fa fa-plus-circle fa-3x hand" aria-hidden="true"></span>
         </div>
 
 
