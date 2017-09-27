@@ -414,7 +414,6 @@ const ACTION_HANDLERS = {
   [ADD_CLASS]: (state, action) => {
     if (action.item.type === "img") {
       let img = findImgInState(state, action.item)
-      console.log(img)
       img.classes.includes(action.cssClass) ? null : img.classes.push(action.cssClass)
     }
     return state
@@ -422,9 +421,7 @@ const ACTION_HANDLERS = {
   [REMOVE_CLASS]: (state, action) => {
     if (action.item.type === "img") {
       let img = findImgInState(state, action.item)
-      //console.log(img.classes)
       img.classes.includes(action.cssClass) ? null : img.classes.splice(indexof(action.cssClass) + 1)
-      //console.log(img.classes)
     }
     return state
   }

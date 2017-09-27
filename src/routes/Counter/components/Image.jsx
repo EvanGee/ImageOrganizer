@@ -53,12 +53,10 @@ const Image = ({
             direction.bottom = true
         }
         prepareMove(img, direction)
+        //should probably add a place holder image or something instead of css
         if (direction.left === true) {
             addClass(img, "moveLeft");
         }
-
-
-
     }
 
     const dragEnter = (e) => {
