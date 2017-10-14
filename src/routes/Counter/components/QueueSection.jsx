@@ -15,7 +15,8 @@ const Section = ({
   buttonsDown,
   setButtonDown,
   addClass,
-  removeClass
+  removeClass,
+  removePlaceHolder
   
 }) => {
 
@@ -33,7 +34,6 @@ const Section = ({
     } else {
       addToImgQueue(section, imgInfo.img)
     }
-
   }
 
   const allowDrop = (e) => {
@@ -47,8 +47,8 @@ const Section = ({
       <div className="QueueContainer center" >
         {
           section.imgs.map((d, i) => {
-            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove, highLighted, buttonsDown,   addClass,
-  removeClass, setButtonDown }} />}
+            return <Image img={d} extraClass="imgQueueImg" i={i} key={i} {...{ section, prepareMove, highLighted, buttonsDown, addClass,
+  removeClass, setButtonDown, removePlaceHolder }} />}
             )
         }
       </div>

@@ -11,7 +11,8 @@ const Image = ({
     buttonsDown,
     setButtonDown,
     addClass,
-    removeClass
+    removeClass,
+    removePlaceHolder
     }) => {
 
     const dragStart = (e) => {
@@ -52,7 +53,7 @@ const Image = ({
         } else {
             direction.bottom = true
         }
-        prepareMove(img, direction)
+        prepareMove(img, section, direction)
         //should probably add a place holder image or something instead of css
         if (direction.left === true) {
             addClass(img, "moveLeft");
@@ -66,6 +67,7 @@ const Image = ({
 
     const dragLeave = (e) => {
         // e.target.classList.remove("draggedOver")
+        removePlaceHolder(img);
     }
 
     const dragEnd = (e) => {

@@ -6,7 +6,8 @@ export const newImg = () => ({
     classes: ["imgs"],
     uploadNum: -1,
     uploadName: "",
-    type: "img"
+    type: "img",
+    isEmpty : false
 })
 
 export const newSection = (name = "New Section", imgs) => ({

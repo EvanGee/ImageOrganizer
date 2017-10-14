@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { addImage, addSection, addToSection, addToImgQueue,
         updateName, download, move_img, prepare_move, deleteSection,
         highLighted, moveHiglighted, setButtonDown, addClass,
-        removeClass, changeDownloadName} from '../modules/counter'
+        removeClass, changeDownloadName, removePlaceHolder} from '../modules/counter'
 
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -25,13 +25,14 @@ const mapDispatchToProps = (dispatch) => ({
   updateName: (sectionId, name) => dispatch(updateName(sectionId, name)),
   download: () => dispatch(download()),
   moveImg: (section, img) => dispatch(move_img(section, img)),
-  prepareMove: (imgToDropOn, direction) => dispatch(prepare_move(imgToDropOn, direction)),
+  prepareMove: (imgToDropOn, section, direction) => dispatch(prepare_move(imgToDropOn, section, direction)),
   deleteSection: (section) => dispatch(deleteSection(section)),
   moveHiglighted: (section, extraImg) => dispatch(moveHiglighted(section, extraImg)),
   setButtonDown: (btnNum, val) => dispatch(setButtonDown(btnNum, val)),
   addClass: (item, clas) => dispatch(addClass(item, clas)),
   removeClass: (item, clas) => dispatch(removeClass(item, clas)),
-  changeDownloadName: (name) => dispatch(changeDownloadName(name))
+  changeDownloadName: (name) => dispatch(changeDownloadName(name)),
+  removePlaceHolder: (img) => dispatch(removePlaceHolder(img))
 })
 
 

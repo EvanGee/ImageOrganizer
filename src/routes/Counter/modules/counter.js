@@ -25,9 +25,15 @@ export const SET_BTN_DOWN = "SET_BTN_DOWN"
 export const ADD_CLASS = "ADD_CLASS"
 export const REMOVE_CLASS = "REMOVE_CLASS"
 export const CHANGE_NAME = "CHANGE_NAME"
+export const CLEAN_MOVE = "CLEAN_MOVE"
 // ------------------------------------
 // Actions
 // ------------------------------------
+export const removePlaceHolder = (img) => ({
+  type: CLEAN_MOVE,
+  img
+})
+
 
 const addToBlobs = (url, blob) => ({
   type: ADD_TO_BLOBS,
@@ -105,9 +111,10 @@ export const move_img = (section, img) => ({
   img
 })
 
-export const prepare_move = (imgToDropOn, direction) => ({
+export const prepare_move = (imgToDropOn, section, direction) => ({
   type: PREPARE_MOVE,
   imgToDropOn,
+  section,
   direction
 })
 
@@ -342,6 +349,11 @@ const ACTION_HANDLERS = {
     })
     return state
   },
+  [CLEAN_MOVE]: (state, action) => {
+
+    console.log(action)
+    return state;
+  },
   [MOVE_IMG]: (state, action) => {
     moveImg(state)
 
@@ -369,6 +381,25 @@ const ACTION_HANDLERS = {
     return state
   },
   [PREPARE_MOVE]: (state, action) => {
+
+    //add a placeholder img
+    if (action.imgToDropOn.isEmpty === false) {
+      var imgInd;
+      const emptyImg = newImg();
+      emptyImg.classes.push("emptyImg");
+      emptyImg.isEmpty = true;
+
+      if (action.section.id === state.imgQueue.id) {
+        console.log(action.section)
+        imgInd = findImgIndex(state.imgQueue, action.imgToDropOn)
+        state.imgQueue.imgs.splice(imgInd, 0, emptyImg);
+      } else {
+        const i = findSectionIndex(state, action.section)
+        imgInd = findImgIndex(action.section, action.imgToDropOn)
+        state.sections[i].imgs.splice(imgInd, 0, emptyImg);
+      }
+    }
+
     state.dragTo = { img: action.imgToDropOn, direction: action.direction }
     return state
   },
@@ -433,13 +464,13 @@ const ACTION_HANDLERS = {
 const initialState = {
   "imgQueue": newSection("imgQueue", []),
   "sections": [newSection("Exterior", []),
-              newSection("Kitchen", []),
-              newSection("Dining Area", []),
-              newSection("Living Room", []),
-              newSection("Master Bedroom", []),
-              newSection("Master Ensuite", []),
-              newSection("Second Bedroom", []),
-              newSection("Second Bathroom", [])],
+  newSection("Kitchen", []),
+  newSection("Dining Area", []),
+  newSection("Living Room", []),
+  newSection("Master Bedroom", []),
+  newSection("Master Ensuite", []),
+  newSection("Second Bedroom", []),
+  newSection("Second Bathroom", [])],
 
   "blobs": {},
   "dragTo": {},

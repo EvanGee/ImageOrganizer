@@ -26,7 +26,8 @@ export const imgOrganizer = (props = {
   setButtonDown,
   addClass,
   removeClass,
-  changeDownloadName
+  changeDownloadName,
+  removePlaceHolder
 
 }) => {
 
